@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunknear_lake_dock=self.webpackChunknear_lake_dock||[]).push([[139],{8331:function(a){a.exports=JSON.parse('{"allTagsPath":"/blog/tags","name":"updates","count":5,"permalink":"/blog/tags/updates"}')}}]);

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://your-docusaurus-test-site.com/blog</id>
+    <title>NEAR Lake Dock Blog</title>
+    <updated>2022-04-01T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://your-docusaurus-test-site.com/blog"/>
+    <subtitle>NEAR Lake Dock Blog</subtitle>
+    <icon>https://your-docusaurus-test-site.com/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Apr 1, 2022 Updates]]></title>
+        <id>2022-04-01-updates</id>
+        <link href="https://your-docusaurus-test-site.com/blog/2022-04-01-updates"/>
+        <updated>2022-04-01T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[👋👋 Hello-hello everybody! The Data Platform Team is here with the updates. It's been a wild week with big news, you know.]]></summary>
+        <content type="html"><![CDATA[<p>👋👋 Hello-hello everybody! The Data Platform Team is here with the updates. It's been a wild week with big news, you know.</p><div class="admonition admonition-tip alert alert--success"><div class="admonition-heading"><h5><span class="admonition-icon"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>Announcement</h5></div><div class="admonition-content"><p>We've managed to release an MVP of <a href="https://github.com/near/near-lake-framework" target="_blank" rel="noopener noreferrer">NEAR Lake Framework</a> 🎉!</p><p>Read the announcement on the <a href="https://gov.near.org/t/announcement-near-lake-framework-brand-new-word-in-indexer-building-approach/17668" target="_blank" rel="noopener noreferrer">NEAR Gov forum</a></p></div></div><p>We invite early adopters to use the brand-new way of building indexers. If you run an indexer already, please consider migrating to NEAR Lake Framework. This will drastically decrease your spending on infrastructure and eventually will minimize the time you need to maintain your indexers.</p><p>So, since the previous week:</p><ul><li>🎉 We have publicly <a href="https://gov.near.org/t/announcement-near-lake-framework-brand-new-word-in-indexer-building-approach/17668" target="_blank" rel="noopener noreferrer">announced the release of NEAR Lake Framework on the NEAR Gov forum</a> (@khorolets)</li><li>😱 In addition to the announcement we've published a video tutorial on <a href="https://www.youtube.com/watch?v=GsF7I93K-EQ" target="_blank" rel="noopener noreferrer">how to use NEAR Lake Framework on YouTube</a>. Please watch it, like it, and subscribe to the channel, you know what to do (@khorolets)</li><li>Worth mentioning, the <a href="https://github.com/near-examples/near-lake-accounts-watcher" target="_blank" rel="noopener noreferrer">source code for the tutorial</a> is available on GitHub (@khorolets)</li><li>Just for the sake, we have rolled the <a href="https://github.com/near/near-lake/releases/tag/0.1.0" target="_blank" rel="noopener noreferrer">0.1.0 release of NEAR Lake indexer</a>. It's the one the Data Platform Team is running to provide data on AWS S3 for everyone (@khorolets)</li><li>🥰 By the way we thank @gueux for the contribution to NEAR Lake projects that allow developers to use S3 compatible services (e.g. for local development). Great job!</li><li>We're finishing up the backfilling of the data for NEAR Lake to AWS S3. It's almost done for both testnet and mainnet. I want to remind you that all the up-to-date data is being stored and is already ready to be used. I guess a few more days left to finish the process. (@khorolets)</li><li>😇 We keep working on rewriting Indexer for Explorer on top of NEAR Lake Framework, switching it to use SingleStore instead of PostgreSQL. To give you some details we're planning the changes to the database structure and choosing the most appropriate libraries. We are going to start giving more details when there be any interesting ones. (@telezhnaya)</li><li>And don't anyone for now, but we're working on NEAR Lake Framework JS, but shhh 🤫 (@khorolets)</li></ul><p>I think the week was great and full of successful results 😅. We are looking forward to hearing from you what do you think about NEAR Lake Framework. Please, share your usage stories, we'd like to promote your indexers built on top of NEAR Lake Framework, it can inspire other projects. Your success stories may lead to even more great projects in our ecosystem.</p><p>That's all for this week. Stay tuned! Looking forward to seeing you next week.
+And don't forget to keep rocking 🤘!</p>]]></content>
+        <author>
+            <name>Bohdan Khorolets</name>
+            <uri>https://github.com/khorolets</uri>
+        </author>
+        <author>
+            <name>Olga Telezhnaya</name>
+            <uri>https://github.com/telezhnaya</uri>
+        </author>
+        <author>
+            <name>Vlad Frolov</name>
+            <uri>https://github.com/frol</uri>
+        </author>
+        <category label="updates" term="updates"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Mar 25, 2022 Updates]]></title>
+        <id>2022-03-25-updates</id>
+        <link href="https://your-docusaurus-test-site.com/blog/2022-03-25-updates"/>
+        <updated>2022-03-25T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[👋 Hello everyone! It's been a while since the last update. Things went bananas in the world. Data Platform Team is currently safe and continues working. We're pushing the MVP release of NEAR Lake project and working on the refactoring of NEAR Indexer for Explorer. We're changing the data storage for Indexer for Explorer from PostgreSQL to SingleStore, it should improve the stability of the data flow and it should end up improving the stability of NEAR Explorer. At least in terms of data availability and decreasing the possible interruptions.]]></summary>
+        <content type="html"><![CDATA[<p>👋 Hello everyone! It's been a while since the last update. Things went bananas in the world. Data Platform Team is currently safe and continues working. We're pushing the MVP release of NEAR Lake project and working on the refactoring of NEAR Indexer for Explorer. We're changing the data storage for Indexer for Explorer from PostgreSQL to SingleStore, it should improve the stability of the data flow and it should end up improving the stability of NEAR Explorer. At least in terms of data availability and decreasing the possible interruptions.</p><p>Since the previous update:</p><ul><li>We continue backfilling the data for NEAR Lake to AWS S3. You can see the updates in <a href="https://github.com/near/near-lake/issues/8" target="_blank" rel="noopener noreferrer">this issue</a>. For the record, we fill in some historical data for mainnet and testnet. All the fresh data is already available. (@khorolets)</li><li>Small yet important improvement on the <a href="https://github.com/near/near-lake-framework/pull/11" target="_blank" rel="noopener noreferrer">near-lake-framework</a> has been delivered. This will ensure the user gets consistent data without any gaps. (@khorolets)</li><li>Also, today we have added some useful debug logging to NEAR Lake Framework (@khorolets)</li><li>We have done some cost estimation to find out how much money a user will need to run a single instance of an indexer on top of NEAR Lake Framework. The numbers are quite exciting. Approximately $18.15 per month. See <a href="https://github.com/near/near-lake-framework#cost-estimates" target="_blank" rel="noopener noreferrer">the README section and explanation</a> by yourself. @(khorolets)</li><li>Ah, and we have launched a small project <a href="https://github.com/khorolets/near-lake-pulse" target="_blank" rel="noopener noreferrer"><code>near-lake-pulse</code></a> just to check if we have all the data stored on S3 consistently. The project is providing an endpoint with metrics for Prometheus. The source code might be used for inspiration (@khorolets)</li><li>We are moving forward to the public announcement of NEAR Lake, probably next week. We're going to invite early adopters. Stay tuned!</li><li>We have added a new table at <a href="https://github.com/near/near-analytics/commit/9e2e6f774a42909d23c4cfda805f88cd84333304" target="_blank" rel="noopener noreferrer">near-analytics</a>, it gives the understanding of average gas burnt between transactions (@telezhnaya)</li><li>Meanwhile we are writing/rewriting NEAR Indexer for Explorer to NEAR Lake and SingleStore as a storage <a href="https://github.com/telezhnaya/near-lake-flows-into-sql-base" target="_blank" rel="noopener noreferrer">here</a> (@telezhnaya)</li></ul><p>It's been a tough month for everyone. Anyway, we are back online and keep rocking 🤘. Stay tuned! See you around!</p>]]></content>
+        <author>
+            <name>Bohdan Khorolets</name>
+            <uri>https://github.com/khorolets</uri>
+        </author>
+        <author>
+            <name>Olga Telezhnaya</name>
+            <uri>https://github.com/telezhnaya</uri>
+        </author>
+        <author>
+            <name>Vlad Frolov</name>
+            <uri>https://github.com/frol</uri>
+        </author>
+        <category label="updates" term="updates"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Mar 18, 2022 updates]]></title>
+        <id>2022-02-18-updates</id>
+        <link href="https://your-docusaurus-test-site.com/blog/2022-02-18-updates"/>
+        <updated>2022-02-18T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[👋 How's it going, everyone? Seems like we are renaming to Data Team 🤷, so Data Team is here with fresh weekly updates. All the week we were working on NEAR Lake pushing it to MVP release as hard as we could.]]></summary>
+        <content type="html"><![CDATA[<p>👋 How's it going, everyone? Seems like we are renaming to Data Team 🤷, so Data Team is here with fresh weekly updates. All the week we were working on <a href="https://github.com/near/near-lake" target="_blank" rel="noopener noreferrer">NEAR Lake</a> pushing it to <a href="https://github.com/near/near-lake/milestone/2" target="_blank" rel="noopener noreferrer">MVP release</a> as hard as we could.</p><p>Since the previous week:</p><ul><li>We have finished the revision of the <code>StreamerMessage</code> structure and decided to leave it as-is for now. In the future, we plan to adjust the way the underlying structures are serialized to JSON, but this is going to be in the future.</li><li>NEAR Lake has been deployed to both testnet and mainnet networks in order to index the data from the genesis. (@khorolets)
+Unfortunately, or maybe, fortunately, yesterday we've noticed that the <a href="https://github.com/near/near-lake/issues/23" target="_blank" rel="noopener noreferrer">order of the data we get from S3 is somehow broken</a>. It happens because the object keys on S3 are strings and we forgot about the way numbers represented in strings are being sorted 🤦. But <a href="https://github.com/near/near-lake/pull/24" target="_blank" rel="noopener noreferrer">the fix</a> is on the way and we will restart the indexing process one more time. (@khorolets)</li><li>Meanwhile, NEAR Lake has been empowered with the CI 💪. However, some differences between the environment we build the release in and the servers we run it on causes problems. You can follow the progress by subscribing to <a href="https://github.com/near/near-lake/issues/21" target="_blank" rel="noopener noreferrer">this issue</a>. We'll figure it out. (@khorolets)</li><li>NEAR Lake Framework <a href="https://github.com/near/near-lake-framework/pull/6" target="_blank" rel="noopener noreferrer">has been refactored</a>. We are trying different API approaches but looks like we are done here. (@khorolets)</li><li>Check out the new <a href="https://github.com/near/near-lake-framework/blob/main/README.md" target="_blank" rel="noopener noreferrer">fancy README for NEAR Lake Framework</a> we wrote this week. (@khorolets)</li></ul><p>That's all for this week, folks! Thanks for being with us all this week. Please, have a great and peaceful weekend! Looking forward to see you all next week! Let's keep rocking! 🤘</p>]]></content>
+        <author>
+            <name>Bohdan Khorolets</name>
+            <uri>https://github.com/khorolets</uri>
+        </author>
+        <author>
+            <name>Olga Telezhnaya</name>
+            <uri>https://github.com/telezhnaya</uri>
+        </author>
+        <author>
+            <name>Vlad Frolov</name>
+            <uri>https://github.com/frol</uri>
+        </author>
+        <category label="updates" term="updates"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Feb 11, 2022 Updates]]></title>
+        <id>2022-02-11-updates</id>
+        <link href="https://your-docusaurus-test-site.com/blog/2022-02-11-updates"/>
+        <updated>2022-02-11T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Greeting from the Indexer Team. At least from that part of the team who is not having a vacation yet 🤪]]></summary>
+        <content type="html"><![CDATA[<p>Greeting from the Indexer Team. At least from that part of the team who is not having a vacation yet 🤪</p><p>We've brought some exciting news about our progress this week.</p><p>Indexer Team is focused on Lightweight NEAR Indexer infrastructure and Indexer for Explorer. The majority of our work this week was about a brand new indexer <a href="https://github.com/near/near-lake" target="_blank" rel="noopener noreferrer">NEAR Lake</a>. Enjoy the weekly update with us:</p><ul><li>In the process of revising the <code>StreamerMessage</code> struct (<a href="https://github.com/near/near-lake/issues/1" target="_blank" rel="noopener noreferrer">ref</a>) we:<ul><li>Made an extraction of indexer-related types to a separate crate <code>near-indexer-primitives</code> and it is going to be published to crates.io very soon, hopefully. (@khorolets)</li><li>Moved <code>state_changes</code> field from the top-level of the <code>StreamerMessage</code> to the <code>IndexerShard</code> along with additional post-processing that enables the division of the <code>StateChanges</code> by the shard (<a href="https://github.com/near/nearcore/pull/6255" target="_blank" rel="noopener noreferrer">ref PR</a>) (@khorolets)</li></ul></li><li>NEAR Lake project is developing:<ul><li>Now it has a README with the description of the concept and the reason for existing. Please, <a href="https://github.com/near/near-lake#readme" target="_blank" rel="noopener noreferrer">have a look at the README.md</a> (@khorolets)</li><li>NEAR Lake ecosystem friends arriving at the party. Meet <a href="https://github.com/near/near-lake-framework" target="_blank" rel="noopener noreferrer">NEAR Lake Framework</a> in its early days and first step (@khorolets)
+The coolest thing about the <code>near-lake-framework</code> is that it depends only on <code>near-indexer-primitives</code> and doesn't require the entire <code>nearcore</code>! It can be built on Apple M1 and run on it smoothly.</li><li>And a small yet working project <code>near-lake-raw-printer</code>, built on top of NEAR Lake Framework has been created. Think of it as about a starting point for the projects that use the NEAR Lake Framework and are capable of doing something with the raw data from the NEAR Lake (@khorolets)</li></ul></li></ul><p>Both projects <code>near-lake-framework</code> and <code>near-lake-raw-printer</code> have been just published and missed the README. Also, they are not finalized, so it's too early to start using them.</p><p>Worth mentioning that we have started the node with NEAR Lake instance for the <code>testnet</code> 🎉 and it is running from the genesis, filling the AWS S3 bucket with the data.</p><p>That's all for today, see you next week. Let's keep rocking! 🤘</p>]]></content>
+        <author>
+            <name>Bohdan Khorolets</name>
+            <uri>https://github.com/khorolets</uri>
+        </author>
+        <author>
+            <name>Olga Telezhnaya</name>
+            <uri>https://github.com/telezhnaya</uri>
+        </author>
+        <author>
+            <name>Vlad Frolov</name>
+            <uri>https://github.com/frol</uri>
+        </author>
+        <category label="updates" term="updates"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Feb 4, 2022 Updates]]></title>
+        <id>2022-02-04-updates</id>
+        <link href="https://your-docusaurus-test-site.com/blog/2022-02-04-updates"/>
+        <updated>2022-02-04T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Indexer Team is focused on NEAR Indexer microframework and Indexer for Explorer]]></summary>
+        <content type="html"><![CDATA[<p>Indexer Team is focused on NEAR Indexer microframework and Indexer for Explorer</p><p>Updates:</p><ul><li>Improved Indexer DB configuration: all the queries should run faster (@telezhnaya)</li><li>Added the info about all contract deployments into Analytics DB <a href="https://github.com/near/near-analytics/pull/42" target="_blank" rel="noopener noreferrer">https://github.com/near/near-analytics/pull/42</a> (@telezhnaya)</li><li>Added support of FT events in Indexer <a href="https://github.com/near/near-indexer-for-explorer/pull/224" target="_blank" rel="noopener noreferrer">https://github.com/near/near-indexer-for-explorer/pull/224</a> (@telezhnaya)</li><li>Added some indexes into Indexer DB. Be careful, applying migration could take some time <a href="https://github.com/near/near-indexer-for-explorer/pull/243" target="_blank" rel="noopener noreferrer">https://github.com/near/near-indexer-for-explorer/pull/243</a> (@telezhnaya)</li><li>Introduced <code>ReceiptsCache</code> for Indexer for Explorer to avoid unnecessary SELECT queries to Indexer DB <a href="https://github.com/near/near-indexer-for-explorer/pull/234" target="_blank" rel="noopener noreferrer">https://github.com/near/near-indexer-for-explorer/pull/234</a> and <a href="https://github.com/near/near-indexer-for-explorer/pull/244" target="_blank" rel="noopener noreferrer">https://github.com/near/near-indexer-for-explorer/pull/244</a> (@khorolets)</li><li>Prepared a release of Indexer for Explorer compatible with 1.24.0 nearcore (@khorolets)</li><li>Made first steps in the complete remake of Indexer for Explorer - NEAR Lake <a href="https://github.com/near/near-lake" target="_blank" rel="noopener noreferrer">https://github.com/near/near-lake</a> (@khorolets)</li></ul>]]></content>
+        <author>
+            <name>Bohdan Khorolets</name>
+            <uri>https://github.com/khorolets</uri>
+        </author>
+        <author>
+            <name>Olga Telezhnaya</name>
+            <uri>https://github.com/telezhnaya</uri>
+        </author>
+        <author>
+            <name>Vlad Frolov</name>
+            <uri>https://github.com/frol</uri>
+        </author>
+        <category label="updates" term="updates"/>
+    </entry>
+</feed>
