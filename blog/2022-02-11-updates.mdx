@@ -1,0 +1,29 @@
+---
+slug: 2022-02-11-updates
+title: Feb 11, 2022 Updates
+authors: [khorolets, telezhnaya, frol]
+tags: [updates]
+---
+
+Greeting from the Indexer Team. At least from that part of the team who is not having a vacation yet 🤪
+
+We've brought some exciting news about our progress this week.
+
+Indexer Team is focused on Lightweight NEAR Indexer infrastructure and Indexer for Explorer. The majority of our work this week was about a brand new indexer [NEAR Lake](https://github.com/near/near-lake). Enjoy the weekly update with us:
+
+<!--truncate -->
+
+* In the process of revising the `StreamerMessage` struct ([ref](https://github.com/near/near-lake/issues/1)) we:
+  * Made an extraction of indexer-related types to a separate crate `near-indexer-primitives` and it is going to be published to crates.io very soon, hopefully. (@khorolets)
+  * Moved `state_changes` field from the top-level of the `StreamerMessage` to the `IndexerShard` along with additional post-processing that enables the division of the `StateChanges` by the shard ([ref PR](https://github.com/near/nearcore/pull/6255)) (@khorolets)
+* NEAR Lake project is developing:
+  * Now it has a README with the description of the concept and the reason for existing. Please, [have a look at the README.md](https://github.com/near/near-lake#readme) (@khorolets)
+  * NEAR Lake ecosystem friends arriving at the party. Meet [NEAR Lake Framework](https://github.com/near/near-lake-framework) in its early days and first step (@khorolets)
+  The coolest thing about the `near-lake-framework` is that it depends only on `near-indexer-primitives` and doesn't require the entire `nearcore`! It can be built on Apple M1 and run on it smoothly.
+  * And a small yet working project `near-lake-raw-printer`, built on top of NEAR Lake Framework has been created. Think of it as about a starting point for the projects that use the NEAR Lake Framework and are capable of doing something with the raw data from the NEAR Lake (@khorolets)
+
+Both projects `near-lake-framework` and `near-lake-raw-printer` have been just published and missed the README. Also, they are not finalized, so it's too early to start using them.
+
+Worth mentioning that we have started the node with NEAR Lake instance for the `testnet` 🎉 and it is running from the genesis, filling the AWS S3 bucket with the data.
+
+That's all for today, see you next week. Let's keep rocking! 🤘

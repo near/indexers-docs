@@ -1,0 +1,44 @@
+---
+sidebar_position: 5
+---
+
+# NEAR Lake Framework
+
+:::note GitHub repo
+
+https://github.com/near/near-lake-framework/
+
+:::
+
+## Description
+
+NEAR Lake Framework is a small library companion to [NEAR Lake](./near-lake). It allows you to build your own indexer that subscribes to the stream of blocks from the [NEAR Lake](./near-lake) data source and create your own logic to process the NEAR Protocol data.
+
+:::tip NEAR Lake Framework announcement
+
+We have announced the release of NEAR Lake Framework on NEAR Gov forum
+
+Please, read the post [there](https://gov.near.org/t/announcement-near-lake-framework-brand-new-word-in-indexer-building-approach/17668)
+
+:::
+
+
+## Why is it better than [NEAR Indexer Framework](./near-indexer-framework)
+
+- MVP version of NEAR Lake Framework consumes **~145MB of RAM** and we’re going to improve it
+- It doesn’t depend on [`nearcore`](https://github.com/near/nearcore) and it is not a NEAR node so you don’t need to upgrade it every time nearcore cuts a release
+- No syncing process is involved anymore, so even if your indexer got stuck you can restart it from any block and run with it immediately
+- There is no huge data folder anymore, so you don’t need to pay for quite expensive 1TB SSD drives
+- Want to debug your indexer on mainnet locally? No problem, do whatever you need
+
+
+## Examples & Tutorials
+
+- [`near-examples/near-lake-raw-printer`](https://github.com/near-examples/near-lake-raw-printer): simple example of a data printer built on top of NEAR Lake Framework
+- [`near-examples/near-lake-accounts-watcher`](https://github.com/near-examples/near-lake-accounts-watcher): source code for a video tutorial on how to use the NEAR Lake Framework
+
+:::note Tutorials
+
+See Tutorials page
+
+:::
