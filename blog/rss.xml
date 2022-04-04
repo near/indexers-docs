@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
     <channel>
         <title>NEAR Lake Dock Blog</title>
-        <link>https://khorolets.github.io/near-lake-dock/near-lake-dock/blog</link>
+        <link>https://khorolets.github.io/near-lake-dock/blog</link>
         <description>NEAR Lake Dock Blog</description>
         <lastBuildDate>Fri, 01 Apr 2022 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
@@ -10,7 +10,7 @@
         <language>en</language>
         <item>
             <title><![CDATA[Apr 1, 2022 Updates]]></title>
-            <link>https://khorolets.github.io/near-lake-dock/near-lake-dock/blog/2022-04-01-updates</link>
+            <link>https://khorolets.github.io/near-lake-dock/blog/2022-04-01-updates</link>
             <guid>2022-04-01-updates</guid>
             <pubDate>Fri, 01 Apr 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[👋👋 Hello-hello everybody! The Data Platform Team is here with the updates. It's been a wild week with big news, you know.]]></description>
@@ -20,7 +20,7 @@ And don't forget to keep rocking 🤘!</p>]]></content:encoded>
         </item>
         <item>
             <title><![CDATA[Mar 25, 2022 Updates]]></title>
-            <link>https://khorolets.github.io/near-lake-dock/near-lake-dock/blog/2022-03-25-updates</link>
+            <link>https://khorolets.github.io/near-lake-dock/blog/2022-03-25-updates</link>
             <guid>2022-03-25-updates</guid>
             <pubDate>Fri, 25 Mar 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[👋 Hello everyone! It's been a while since the last update. Things went bananas in the world. Data Platform Team is currently safe and continues working. We're pushing the MVP release of NEAR Lake project and working on the refactoring of NEAR Indexer for Explorer. We're changing the data storage for Indexer for Explorer from PostgreSQL to SingleStore, it should improve the stability of the data flow and it should end up improving the stability of NEAR Explorer. At least in terms of data availability and decreasing the possible interruptions.]]></description>
@@ -29,7 +29,7 @@ And don't forget to keep rocking 🤘!</p>]]></content:encoded>
         </item>
         <item>
             <title><![CDATA[Mar 18, 2022 updates]]></title>
-            <link>https://khorolets.github.io/near-lake-dock/near-lake-dock/blog/2022-02-18-updates</link>
+            <link>https://khorolets.github.io/near-lake-dock/blog/2022-02-18-updates</link>
             <guid>2022-02-18-updates</guid>
             <pubDate>Fri, 18 Feb 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[👋 How's it going, everyone? Seems like we are renaming to Data Team 🤷, so Data Team is here with fresh weekly updates. All the week we were working on NEAR Lake pushing it to MVP release as hard as we could.]]></description>
@@ -39,7 +39,7 @@ Unfortunately, or maybe, fortunately, yesterday we've noticed that the <a href="
         </item>
         <item>
             <title><![CDATA[Feb 11, 2022 Updates]]></title>
-            <link>https://khorolets.github.io/near-lake-dock/near-lake-dock/blog/2022-02-11-updates</link>
+            <link>https://khorolets.github.io/near-lake-dock/blog/2022-02-11-updates</link>
             <guid>2022-02-11-updates</guid>
             <pubDate>Fri, 11 Feb 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[Greeting from the Indexer Team. At least from that part of the team who is not having a vacation yet 🤪]]></description>
@@ -49,7 +49,7 @@ The coolest thing about the <code>near-lake-framework</code> is that it depends 
         </item>
         <item>
             <title><![CDATA[Feb 4, 2022 Updates]]></title>
-            <link>https://khorolets.github.io/near-lake-dock/near-lake-dock/blog/2022-02-04-updates</link>
+            <link>https://khorolets.github.io/near-lake-dock/blog/2022-02-04-updates</link>
             <guid>2022-02-04-updates</guid>
             <pubDate>Fri, 04 Feb 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[Indexer Team is focused on NEAR Indexer microframework and Indexer for Explorer]]></description>
