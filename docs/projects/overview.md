@@ -3,9 +3,9 @@ sidebar_position: 1
 sidebar_label: Overview
 ---
 
-# Data Platform Team projects overview
+# Projects overview
 
-Here you can find a curated list of the projects Data Platform Team owns. You can learn more about each of the projects listed below:
+Here you can find a curated list of the idnexer projects. You can learn more about each of the projects listed below:
 
 - [NEAR Indexer Framework](./near-indexer-framework)
 - [NEAR Indexer for Explorer](./near-indexer-for-explorer)

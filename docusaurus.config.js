@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'NEAR Lake Dock',
   tagline: 'A warm place for indexer builders',
-  url: 'https://khorolets.github.io/near-lake-dock',
+  url: 'https://khorolets.github.io',
   baseUrl: '/near-lake-dock/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
