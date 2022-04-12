@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://khorolets.github.io/near-lake-dock/blog</id>
-    <title>NEAR Lake Dock Blog</title>
+    <title>Pagoda Indexer Docs Blog</title>
     <updated>2022-04-01T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://khorolets.github.io/near-lake-dock/blog"/>
-    <subtitle>NEAR Lake Dock Blog</subtitle>
-    <icon>https://khorolets.github.io/near-lake-dock/img/favicon.ico</icon>
+    <subtitle>Pagoda Indexer Docs Blog</subtitle>
+    <icon>https://khorolets.github.io/near-lake-dock/img/favicon.png</icon>
     <entry>
         <title type="html"><![CDATA[Apr 1, 2022 Updates]]></title>
         <id>2022-04-01-updates</id>

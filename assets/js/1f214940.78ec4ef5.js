@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunknear_lake_dock=self.webpackChunknear_lake_dock||[]).push([[6103],{365:function(e){e.exports=JSON.parse('{"permalink":"/near-lake-dock/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":5,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);
