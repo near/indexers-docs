@@ -6,13 +6,13 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'NEAR Lake Dock',
+  title: 'Pagoda Indexer Docs',
   tagline: 'A warm place for indexer builders',
   url: 'https://khorolets.github.io',
   baseUrl: '/near-lake-dock/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon.png',
   organizationName: 'khorolets', // Usually your GitHub org/user name.
   projectName: 'near-lake-dock', // Usually your repo name.
   trailingSlash: false,
@@ -56,10 +56,11 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'NEAR Lake Dock',
+        title: 'Docs',
         logo: {
-          alt: 'My Site Logo',
+          alt: 'Pagoda Indexer Docs',
           src: 'img/logo.svg',
+          srcDark: 'img/logo_dark.svg',
         },
         items: [
           {

@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: Block
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CodeBlock from '@site/src/components/CodeBlock';
+
+# `Block` Structure
+
+## Definition
+
+`Block` is the main entity in NEAR Protocol blockchain. `Blocks` are produced in NEAR Protocol every second.
+
+It contains the info:
+- about the `Block` producer (`AccountId` of the validator responsible for particular `Block` production)
+- Block Header
+- List of Chunk Headers
+
+## Representation
+
+### `Block`
+<Tabs>
+  <TabItem value="rust" label="Rust" default>
+
+<pre>
+    pub struct BlockView {`{`}{`\n`}
+{`    `}pub author: AccountId,{`\n`}
+{`    `}pub header: BlockHeaderView,{`\n`}
+{`    `}pub chunks: Vec{`<`}ChunkHeaderView{`>`},{`\n`}
+    {`}`}
+</pre>
+
+  </TabItem>
+  <TabItem value="json" label="JSON">
+
+    {
+      "author": "account.near",
+      "header": { BlockHeaderView },
+      "chunks": [ ChunkHeaderView ],
+    }
+
+  </TabItem>
+</Tabs>
