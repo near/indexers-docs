@@ -3,6 +3,7 @@
 
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const hightlightWords = require('./src/remark/rehype-highlight-word');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -26,6 +27,7 @@ const config = {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           editUrl: 'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          remarkPlugins: [hightlightWords],
         },
         blog: {
           showReadingTime: true,
@@ -34,7 +36,10 @@ const config = {
             'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: [
+            require.resolve('./src/css/custom.css'),
+            require.resolve('./src/css/monokai-sublime.css'),
+          ],
         },
       }),
     ],
@@ -127,6 +132,7 @@ const config = {
       prism: {
         theme: darkCodeTheme,
         darkTheme: darkCodeTheme,
+        additionalLanguages: ['rust'],
       },
       announcementBar: {
         id: 'lake_framework_announcement',
