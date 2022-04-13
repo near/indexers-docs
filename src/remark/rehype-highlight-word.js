@@ -19,23 +19,36 @@ const CALLOUT = /___(.*?)__(.*?)___/g;
 
 function plugin(options) {
   const transformer = async (ast) => {
-    visit(ast, 'code', (node) => {
-      let result = '';
-      if (node.lang) {
-        result = hljs.highlight(node.value, { language: node.lang }).value;
-      } else {
-        result = hljs.highlightAuto(node.value).value;
-      }
-      if (node.meta && node.meta.includes('links')) {
-        result = result.replaceAll(CALLOUT, (_, text, href) => `<a href="${href}" class="indexer-hightlight">${text}</a>`);
-      }
-      result = result.replaceAll('\n', '<br/>');
-      result = result.replaceAll('{', '&#123;');
-      result = result.replaceAll('}', '&#125;');
+    let codeBlockImported = false;
+    visit(ast, ['code', 'import'], (node) => {
+      if (node.type === 'code') {
+        let result = '';
+        if (node.lang) {
+          result = hljs.highlight(node.value, { language: node.lang }).value;
+        } else {
+          result = hljs.highlightAuto(node.value).value;
+        }
+        if (node.meta && node.meta.includes('links')) {
+          result = result.replaceAll(CALLOUT, (_, text, href) => `<a href="${href}" class="indexer-hightlight">${text}</a>`);
+        }
+        result = result.replaceAll('\n', '<br/>');
+        result = result.replaceAll('{', '&#123;');
+        result = result.replaceAll('}', '&#125;');
 
-      node.type = "jsx";
-      node.value = `<CodeBlock className="language-${node.lang}">${result}</CodeBlock>`;
+        node.type = "jsx";
+        node.value = `<CodeBlock className="language-${node.lang}">${result}</CodeBlock>`;
+      } else if (node.type === 'import') {
+        if (node.value.includes('@theme/CodeBlock')) {
+          codeBlockImported = true;
+        }
+      }
     })
+    if (!codeBlockImported) {
+      ast.children.unshift({
+        type: 'import',
+        value: "import CodeBlock from '@theme/CodeBlock';",
+      });
+    }
   };
   return transformer;
 };

@@ -14,7 +14,7 @@ VIDEO
 
 :::info Text version
 
-Text version doesn't replace the video. However, we've extended some explanaitions.
+Text version has the same explanations as the video.
 
 :::
 
@@ -51,13 +51,11 @@ Assuming we have two accounts living on different [Shards](../structures/shard.m
 
 But this [Receipt](../structures/receipt.mdx) cannot be executed here, because **bob.near** doesn’t live on the same Shard as **alice.near**, so **the Receipt must be executed on the receiver’s Shard**. So the Receipt is moving to the Shard where **bob.near** belongs to.
 
-On the destination Shard the Receipt is executed and the result of **ExecutionOutcome** will be another Receipt with the *refund*.
+On the destination Shard the Receipt is executed and the process is considered as done.
 
-:::info Gas and Refunds
+:::info The explanation here is simplified
 
-Quick recap. A blockchain is a decentralized network of computers that perform calculations by request. Users who request any calculations send Transactions to the network. In order to reward those computers owners users pay for Transactions, that paymans is called Gas.
-
-Along with Transactions sent to the network users attach Gas to cover the reward. NEAR Protocol allows to attach more than enough Gas amount to the Transaction and get the refund. NEAR Protocol will take only the necessary amount of Gas and will refund the rest to the sender.
+Please refer to the [Token transfer](./token-transfer-flow.mdx) flow article
 
 :::
 
