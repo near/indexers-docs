@@ -14,8 +14,8 @@ const config = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.png',
-  organizationName: 'khorolets', // Usually your GitHub org/user name.
-  projectName: 'near-lake-dock', // Usually your repo name.
+  organizationName: 'near', // Usually your GitHub org/user name.
+  projectName: 'indexers-docs', // Usually your repo name.
   trailingSlash: false,
 
   presets: [
@@ -26,14 +26,14 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl: 'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          editUrl: 'https://github.com/near/indexers-docs/tree/main/',
           remarkPlugins: [hightlightWords],
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/near/indexers-docs/tree/main/',
         },
         theme: {
           customCss: [
@@ -122,7 +122,7 @@ const config = {
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/near/indexers-docs',
               },
             ],
           },
