@@ -9,8 +9,8 @@ const hightlightWords = require('./src/remark/rehype-highlight-word');
 const config = {
   title: 'Pagoda Indexer Docs',
   tagline: 'A warm place for indexer builders',
-  url: 'https://khorolets.github.io',
-  baseUrl: '/near-lake-dock/',
+  url: 'https://near-indexers.io',
+  baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.png',
