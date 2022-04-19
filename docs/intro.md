@@ -46,7 +46,7 @@ The dApp has a helper deployed somewhere off-chain, and this helper has a code t
 
 ### Getting the data from a blockchain from the outer world
 
-NEAR blockchain implements a [JSON-RPC endpoint](https://docs.near.org/docs/api/rpc) for everyone to interact with the blockchain. Throught the JSON-RPC API users can call smart-contracts triggering them to be executed with a given parameters. Also, users can view the data from the blockchain.
+NEAR blockchain implements a [JSON-RPC endpoint](https://docs.near.org/docs/api/rpc) for everyone to interact with the blockchain. Through the JSON-RPC API users can call smart-contracts triggering them to be executed with a given parameters. Also, users can view the data from the blockchain.
 
 So, continuing with our example we can make our helper to pull a [Block](https://docs.near.org/docs/api/rpc/block-chunk#block) every second, then pull all the [Chunks](https://docs.near.org/docs/api/rpc/block-chunk#chunk) and analyze the Transactions included in the Block to check if there is a transaction to our smart-contract with "buy an e-book" function call. If we observe such a Transaction we need to ensure it is successful to prevent sending the e-book to the user if the "buy e-book" Transaction has failed.
 
@@ -91,5 +91,5 @@ We hope this article gives you an understanding of an indexer concept. Also, we 
 
 ## What's next?
 
-We encourage you to learn more about the [indexer projects](./projects/overview.md). Please, proceed to [Tutorials](/tutorials/intro) section to learn how to build an indexer on practise.
+We encourage you to learn more about the [indexer projects](./projects/overview.md). Please, proceed to [Tutorials](/tutorials/intro) section to learn how to build an indexer on practice.
 
