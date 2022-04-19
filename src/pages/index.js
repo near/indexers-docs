@@ -11,13 +11,13 @@ function HomepageHeader() {
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
-        <h1 className="hero__title">{siteConfig.title}</h1>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
+        <h1 className="hero__title">Indexer Docs</h1>
+        <p className="hero__subtitle">Indexer is a set of tooling that helps developers to monitor the data flowing in the blockchain network</p>
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
             to="/docs/intro">
-            Docusaurus Tutorial - 5min ⏱️
+            Read about Indexer Concept - 5min ⏱️
           </Link>
         </div>
       </div>

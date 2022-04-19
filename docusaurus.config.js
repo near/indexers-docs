@@ -127,7 +127,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Pagoda, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Pagoda, Inc. Built with Docusaurus.<br /> <a href="https://www.flaticon.com/free-stickers/summer" title="summer stickers">Summer stickers created by Stickers - Flaticon</a>`,
       },
       prism: {
         theme: darkCodeTheme,

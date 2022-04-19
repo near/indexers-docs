@@ -1,45 +1,49 @@
 import React from 'react';
 import clsx from 'clsx';
+import Link from '@docusaurus/Link';
 import styles from './styles.module.css';
+
+import LakeImg from '@site/static/img/lake.png';
+import FlowImg from '@site/static/img/flow.png';
+import TutorialsImg from '@site/static/img/tutorials.png';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: 'NEAR Lake Framework',
+    img: LakeImg,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        We have created the most lightweight and cost efficient library to build your own indexer.
+        Find out more about <Link to="/docs/projects/near-lake-framework">NEAR Lake Framework</Link>
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: 'Learn NEAR Protocol Data Flow',
+    img: FlowImg,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        A lot of things happen in NEAR Protocol under the hood. In order to build your indexer you need to
+        understand how data flows and what rules it follows. Start from <Link to="/docs/data-flow-and-structures/flow/near-data-flow">NEAR Data Flow</Link> article
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: 'Tutorials',
+    img: TutorialsImg,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        We believe in the power of examples and tutorials. That's why we are constantly working on creating new tutorials about indexers. Check out the <Link to="/tutorials/lake/near-lake-state-changes-indexer">Getting started with NEAR Lake Framework tutorial</Link>
       </>
     ),
   },
 ];
 
-function Feature({Svg, title, description}) {
+function Feature({img, title, description}) {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
+        <img src={img}  style={{ maxWidth: '40%' }}/>
       </div>
       <div className="text--center padding-horiz--md">
         <h3>{title}</h3>
