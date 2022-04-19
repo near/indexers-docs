@@ -46,7 +46,7 @@ OK, this should be enough for introduction, let's move on to examples.
 
 ## Token transfer between the accounts from different shards
 
-Basically it is an extention of the example from the [NEAR Data Flow](./near-data-flow.mdx) article.
+Basically it is an extension of the example from the [NEAR Data Flow](./near-data-flow.mdx) article.
 
 Assuming we have two accounts **alice.near** and **bob.near**. They belong to different [Shards](../structures/shard.mdx). **alice.near** sends a few tokens to **bob.near**.
 
@@ -71,12 +71,12 @@ We remind you the rule #2 the Receipt must be executed on the receiver's Shard. 
 
 ![Complete scheme of Token transfer between the accounts from different Shards](/docs/flow-token-transfer/01-diff-shards-complete.png)
 
-This is it. Tokens has been transfered from the account from one Shard to the account from the different Shard and the initial sender received the refund of Gas.
+This is it. Tokens has been transferred from the account from one Shard to the account from the different Shard and the initial sender received the refund of Gas.
 
 
 ## Token transfer between the accounts from the same shard
 
-Let's have a look the example where both accounts belong to the same [Shard](../structures/shard.mdx). The proces is completely the same as in the previous example, except the Receipts moving from one Shard to another.
+Let's have a look the example where both accounts belong to the same [Shard](../structures/shard.mdx). The process is completely the same as in the previous example, except the Receipts moving from one Shard to another.
 
 A [Transaction](../structures/transaction.mdx) signed by **alice.near** is sent to the network. It is immediately executed, [ExecutionOutcome](../structures/execution_outcome.mdx) is a result of conversion the transaction into a [Receipt](../structures/receipt.mdx).
 
