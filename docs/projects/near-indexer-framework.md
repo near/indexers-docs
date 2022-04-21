@@ -34,6 +34,8 @@ We are going to build more Indexers in the future, and will also consider buildi
 
 See the [example](https://github.com/nearprotocol/nearcore/tree/master/tools/indexer/example) for further technical details.
 
+- [`near-examples/indexer-tx-watcher-example`](https://github.com/near-examples/indexer-tx-watcher-example) NEAR Indexer example that watches for transaction for specified accounts/contracts
+
 :::info NEAR Indexer Framework usage
 
 The most famous projet build on top of NEAR Indexer Framework is [NEAR Indexer for Explorer](./near-indexer-for-explorer)
