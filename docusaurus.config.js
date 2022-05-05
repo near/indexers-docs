@@ -17,6 +17,9 @@ const config = {
   organizationName: 'near', // Usually your GitHub org/user name.
   projectName: 'indexers-docs', // Usually your repo name.
   trailingSlash: false,
+  scripts: [
+    "/js/mixpanel.js",
+  ],
 
   presets: [
     [
