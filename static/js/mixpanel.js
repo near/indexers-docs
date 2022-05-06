@@ -16,15 +16,15 @@ window.addEventListener("load", function(){
   mixpanel.people.set_once({'first_touch_source': document.referrer, 'date_of_first_touch': new Date().toString()});
 
   // track and get duration for all pages
-  mixpanel.track('Viewed Page', {'page': window.location.pathname});
-  mixpanel.time_event('Viewed Page');
+  mixpanel.track('View Page Indexer Docs', {'page': window.location.pathname});
+  mixpanel.time_event('View Page Indexer Docs');
 
   // track links
-  mixpanel.track_links("a", "Link Click", {'page': window.location.pathname});
+  mixpanel.track_links("a", "Link Click Indexer Docs", {'page': window.location.pathname});
 
   // track copied code
   const copyCode = () => {
-    mixpanel.track("Copied code", {'page': window.location.pathname})
+    mixpanel.track("Copied code Indexer Docs", {'page': window.location.pathname})
     mixpanel.people.increment("copy_code")
   }
 
