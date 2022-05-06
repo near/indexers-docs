@@ -1,0 +1,36 @@
+---
+slug: 2022-05-06-updates
+title: May 6, 2022 Updates
+authors: [khorolets, telezhnaya, frol, tiffany]
+tags: [updates]
+---
+
+👋 Greeting! We are from the Data Platform team, and we're here for you with the weekly updates!
+
+This week the team was focused on finalizing the JavaScript version of [NEAR Lake Framework](https://github.com/near/near-lake-framework-js) and on the [NEAR Lake Flow into SQL Base](https://github.com/telezhnaya/near-lake-flows-into-sql-base).
+
+Now having the NEAR Lake ecosystem in place we're thinking about coming back to the Indexer as a Service idea described on [NEAR Gov Forum almost a year ago](https://gov.near.org/t/indexer-as-a-service-proof-of-concept/4825).
+
+Stuff we've managed to do this week:
+
+- 🎉 [near-lake-framework-js](https://www.npmjs.com/package/near-lake-framework) has been released today to NPM. The up to date version is 1.0.1 (not 1.0.0 because one should never release anything on Friday 😅) (@khorolets)
+- 🤓 The above release is empowered with the tutorial on [near-indexers.io](https://near-indexers.io/tutorials/lake/js-lake-indexer) (@khorolets)
+- The source code for the tutorial is published on GitHub [`near-lake-raw-printer-js`](https://github.com/near-examples/near-lake-raw-printer-js) (@khorolets)
+- We have identified the requirements for the account activity table that we plan to use on [Explorer](https://explorer.near.org), [Wallet](https://wallet.near.org), and [DevConsole](https://console.pagoda.co) to display the historical activity on the accounts. It will feature receipts-level granularity and validators rewards (@telezhnaya and @frol)
+- Also, we had a cross-team conversation about the Indexer as a Service. We had figured out what we can accomplish this quarter in this regard (@khorolets, @frol, and @TiffanyGYJ)
+
+And a couple of things we haven't finished just yet:
+
+- Working on a couple of tutorials for NEAR Lake indexers:
+  - Tutorial how to add the start options from [NEAR Indexer Framework](https://near-indexers.io/docs/projects/near-indexer-framework): `from-latest` or `from-interruption`. The code is almost ready. We'll add a few comments here and there, and write a tutorial article
+  - Tutorial on how to build an indexer to follow [Events](https://nomicon.io/Standards/EventsFormat)
+
+And that's it for this week. It was a pretty intensive week and we think we did good progress. Let's keep rocking 🤘! Same place, next week, see you!
+
+Have a question about indexers? Post it on [StackOverflow with tags `nearprotocol` and `indexer`](https://stackoverflow.com/questions/tagged/nearprotocol+indexer) to get an answer!
+
+---
+
+Data Platform Feedback
+You can reach out to Tiffany Gao (Data Platform Product Manager) to share any feedback about this update or your experience using any Data Platform products:
+[30m Calendly Timeslot](https://calendly.com/tiffany-236/30min) | [tiffany@near.org](mailto:tiffany@near.org) | [Discord](https://discord.com/channels/490367152054992913/542945453533036544) | [Twitter](https://twitter.com/TiffanyYijiaGao)
