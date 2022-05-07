@@ -2,7 +2,11 @@
 sidebar_position: 3
 ---
 
-# JavaScript NEAR Lake indexer basic tutorial
+import ProgrammingLanguage from '@site/src/components/ProgrammingLanguage';
+
+# NEAR Lake indexer basic tutorial
+
+<ProgrammingLanguage lang="js" />
 
 :::info Source code for the tutorial
 
@@ -20,10 +24,6 @@ We want to empower you with a basic tutorial on how to use the JavaScript Librar
 Before we get started, please, ensure you have:
 
 - [nodejs](https://nodejs.org/en/download/) installed
-- TypeScript installed globally
-  ```bash
-  $ npm install -g typescript
-  ```
 
 ## Create a project
 
@@ -65,7 +65,25 @@ About to write to /Users/near/projects/near-lake-raw-printer-js/package.json:
 Is this OK? (yes)
 ```
 
-`package.json` is ready and we can create `tsconfig.json` for TypeScript:
+`package.json` is ready. Let's install `near-lake-framework`
+
+## Install dependencies
+
+Install `near-lake-framework`
+
+```bash
+npm install near-lake-framework --save
+```
+
+Install `typescript` as dev dependency
+
+```bash
+npm install typescript --save-dev
+```
+
+## Setup TypeScript
+
+Now we can create `tsconfig.json` for TypeScript settings:
 
 ```bash
 touch tsconfig.json
@@ -80,6 +98,34 @@ Paste the content to the file:
       "ES2015",
       "dom"
     ]
+  }
+}
+```
+
+Now let's add the `scripts` section to the `package.json`
+
+```json
+"scripts": {
+  "start": "tsc && node index.js"
+}
+```
+
+After that your `package.json` should look similar to:
+
+```json title=package.json
+{
+  "name": "near-lake-raw-printer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && node index.js"
+  },
+  "dependencies": {
+    "near-lake-framework": "^1.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.4"
   }
 }
 ```
@@ -156,24 +202,16 @@ That's it. Now we can compile the code and run it
 
 ## Compile and run
 
-Compiling the code with `tsc` command
-
-```bash
-tsc
-```
-
 :::danger Credentials
 
 To be able to access the data from [NEAR Lake](/docs/projects/near-lake) you need to provide credentials. Please, see the [Credentials](./credentials) article
 
 :::
 
-This will create `index.js` file near the `index.ts` one we have
-
-Run the code
+We've added the `start` command to the `scripts`, so the compilation and run should as easy as
 
 ```bash
-node index.js
+npm run start
 ```
 
 You should see something like the following:

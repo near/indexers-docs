@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 6px 12px;
+  background-color:  #f5f5f5;
+  border-radius: 6px;
+  margin: 12px 0;
+  border-left: 5px solid #c9c9c9;
+}
+
+.containerSmall {
+  display: inline-flex;
+  max-width: 130px;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 3px 6px;
+  background-color:  #f5f5f5;
+  border-radius: 6px;
+  margin: 0;
+  border-left: 5px solid #c9c9c9;
+  vertical-align: middle;
+}
+
+.logo {
+  flex: 1 1 0;
+  min-width: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.logoSmall {
+  flex: 1 1 0;
+  max-width: 30%;
+  height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.disclaimer {
+  font-size:  90%;
+  line-height: 1;
+  padding: 0 12px;
+}
