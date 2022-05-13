@@ -101,8 +101,6 @@ use clap::{Parser, Subcommand};
 use futures::StreamExt;
 use tracing_subscriber::EnvFilter;
 
-use near_lake_framework::LakeConfigBuilder;
-
 #[derive(Parser, Debug, Clone)]
 #[clap(version = "0.1", author = "Near Inc. <hello@nearprotocol.com>")]
 struct Opts {
@@ -178,11 +176,7 @@ This code is not going to build yet. Meanwhile let's have a quick look of what w
 
 - We have imported [`clap`](https://docs.rs/clap/latest/clap/) to set up what command line arguments we're going to accept
 - Also, we've important necessary stuff like `futures` and `tracing_subscriber`
-- `LakeConfigBuilder` has been imported to craft `LakeConfig` for indexer
-- `Opts` and `ChainId` are boilerplate structs to allow us to run a command for our indexer like the following:
-  ```bash
-  ./target/release/indexer mainnet ...
-  ```
+- `Opts` and `ChainId` are boilerplate structs we will cover in [Designing the `StartsOpts`](#designing-the-startoptions) section
 - `init_tracing` in the end of the file is a helper function that subscribes our application to the logs from `near-lake-framework`
 - An asynchronous `main` function with the indexer boilerplate code, but missing the `LakeConfig` creation part we're going to cover in the tutorial.
 - You can find a few `// TODO: ...` sections we've marked for you to find places to write the code from this tutorial.
@@ -191,7 +185,27 @@ OK, all the preparations are done. Let's move on.
 
 ## Design the `StartOptions`
 
-So we want to be able to pass a command that defines the way our indexer should start. Our variants are:
+So we want to be able to pass a command that defines the way our indexer should start.
+
+We already have the structure `Opts` that receives `ChainId` enum variant. This allows us to use command:
+
+```bash
+./target/release/indexer mainnet ...
+```
+
+OR
+
+```bash
+./target/release/indexer testnet ...
+```
+
+Now we want to create `StartOptions` structure that will allow us to tell our indexer where to start indexing from. The command should look like:
+
+```bash
+./target/release mainnet from-latest
+```
+
+Our variants are:
 
 - `from-block N`, where `N` is the block height to start from
 - `from-latest` to start from latest final block in the network
@@ -217,7 +231,7 @@ In order to create `LakeConfig` we're going to use a config builder [`LakeConfig
 Let's instantiate a builder in place of `// TODO: Config` comment:
 
 ```rust title=src/main.src
-    let mut lake_config_builder = LakeConfigBuilder::default();
+    let mut lake_config_builder = near_lake_framework::LakeConfigBuilder::default();
 ```
 
 Notice that `lake_config_builder` is defined as mutable.
@@ -225,7 +239,7 @@ Notice that `lake_config_builder` is defined as mutable.
 Now we need to set the chain we are going to index by matching `ChainId` provided:
 
 ```rust title=src/main.src
-    let mut lake_config_builder = LakeConfigBuilder::default();
+    let mut lake_config_builder = near_lake_framework::LakeConfigBuilder::default();
 
     match &opts.chain_id {
         ChainId::Mainnet(start_options) => {
