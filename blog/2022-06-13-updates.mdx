@@ -1,0 +1,34 @@
+---
+slug: 2022-05-06-updates
+title: May 6, 2022 Updates
+authors: [khorolets, telezhnaya, frol, tiffany]
+tags: [updates]
+---
+
+Happy Friday everyone 👋! The Data Platform team is traditionally here with the updates.
+
+Our main focus this week was on improving the [NEAR Lake Framework](https://github.com/near/near-lake-framework) and empowering users with an additional data pipeline about account activity.
+
+Also, this week the recording of the Data Platform Community Meeting was published on [YouTube](https://www.youtube.com/watch?v=-5nG77ReU4g). By the way, according to the survey we've made during the call the most votes were saying the community wants to have the NEAR Lake Framework Python version. We're taking it into account 😉
+
+This week the Data Platform team:
+
+<!-- truncate -->
+
+- Once again about the [Data Platform Community Meeting](https://www.youtube.com/watch?v=-5nG77ReU4g). During the meeting, we received a question about indexer starting options and we promised to prepare a tutorial as an answer. Here you are, [Extending Lake indexer with start options](https://near-indexers.io/tutorials/lake/lake-start-options) 😇 (@khorolets)
+- Meanwhile, we have released [NEAR Lake Framework 0.3.0](https://github.com/near/near-lake-framework/releases/tag/v0.3.0). We've introduced breaking changes in the indexer configuration.
+    - Now you're encouraged to use `LakeConfigBuilder` to config the indexer
+    - We've refactored the approach to give a developer more power in setting up S3 configuration (custom endpoints, credentials, etc.)
+- All the example repositories for NEAR Lake Framework were updated with tags identifying the crate version it was made for. For now, you can find the `0.2.0` tag for the previous version and `0.3.0` for the current one. We really hope it can help you navigate (@khorolets)
+- We started implementing the account activity table that we plan to use on [Explorer](https://explorer.near.org), [Wallet](https://wallet.near.org), and [DevConsole](https://console.pagoda.co) to display the historical activity on the accounts. It will feature receipts-level granularity and validators rewards (@telezhnaya)
+- Meanwhile, we're planning the work on the Indexer as a Service. We will share some details soon enough (@khorolets)
+
+This week is ending and we hope yours was productive and successful too. Let's keep on rocking 🤘! See you all next week! Enjoy your weekend 🏝
+
+Have a question about indexers? Post it on [StackOverflow with tags `nearprotocol` and `indexer`](https://stackoverflow.com/questions/tagged/nearprotocol+indexer) to get an answer!
+
+---
+
+Data Platform Feedback
+You can reach out to Tiffany Gao (Data Platform Product Manager) to share any feedback about this update or your experience using any Data Platform products:
+[30m Calendly Timeslot](https://calendly.com/tiffany-236/30min) | [tiffany@near.org](mailto:tiffany@near.org) | [Discord](https://discord.com/channels/490367152054992913/542945453533036544) | [Twitter](https://twitter.com/TiffanyYijiaGao)
