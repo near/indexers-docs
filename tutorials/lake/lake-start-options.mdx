@@ -220,7 +220,7 @@ Let's instantiate a builder in place of `// TODO: Config` comment:
     let mut lake_config_builder = LakeConfigBuilder::default();
 ```
 
-We are marking `lake_config_builder` as mutable for a reason.
+Notice that `lake_config_builder` is defined as mutable.
 
 Now we need to set the chain we are going to index by matching `ChainId` provided:
 
