@@ -101,21 +101,6 @@ use clap::{Parser, Subcommand};
 use futures::StreamExt;
 use tracing_subscriber::EnvFilter;
 
-#[derive(Parser, Debug, Clone)]
-#[clap(version = "0.1", author = "Near Inc. <hello@nearprotocol.com>")]
-struct Opts {
-    #[clap(subcommand)]
-    pub chain_id: ChainId,
-}
-
-#[derive(Subcommand, Debug, Clone)]
-enum ChainId {
-    #[clap(subcommand)]
-    Mainnet(StartOptions),
-    #[clap(subcommand)]
-    Testnet(StartOptions),
-}
-
 // TODO: StartOptions
 
 #[tokio::main]
@@ -176,7 +161,6 @@ This code is not going to build yet. Meanwhile let's have a quick look of what w
 
 - We have imported [`clap`](https://docs.rs/clap/latest/clap/) to set up what command line arguments we're going to accept
 - Also, we've important necessary stuff like `futures` and `tracing_subscriber`
-- `Opts` and `ChainId` are boilerplate structs we will cover in [Designing the `StartsOpts`](#designing-the-startoptions) section
 - `init_tracing` in the end of the file is a helper function that subscribes our application to the logs from `near-lake-framework`
 - An asynchronous `main` function with the indexer boilerplate code, but missing the `LakeConfig` creation part we're going to cover in the tutorial.
 - You can find a few `// TODO: ...` sections we've marked for you to find places to write the code from this tutorial.
@@ -185,9 +169,9 @@ OK, all the preparations are done. Let's move on.
 
 ## Design the `StartOptions`
 
-So we want to be able to pass a command that defines the way our indexer should start.
+So we want to be able to pass a command that defines the way our indexer should start. In this tutorial we'll be using `clap`.
 
-We already have the structure `Opts` that receives `ChainId` enum variant. This allows us to use command:
+We need a structure that receives the chain id. This will allow us to use command:
 
 ```bash
 ./target/release/indexer mainnet ...
@@ -199,7 +183,27 @@ OR
 ./target/release/indexer testnet ...
 ```
 
-Now we want to create `StartOptions` structure that will allow us to tell our indexer where to start indexing from. The command should look like:
+Let's replace the `// TODO: StartOptions` in the `src/main.rs` with:
+
+```rust title=src/main.rs
+#[derive(Parser, Debug, Clone)]
+#[clap(version = "0.1", author = "Near Inc. <hello@nearprotocol.com>")]
+struct Opts {
+    #[clap(subcommand)]
+    pub chain_id: ChainId,
+}
+
+#[derive(Subcommand, Debug, Clone)]
+enum ChainId {
+    #[clap(subcommand)]
+    Mainnet(StartOptions),
+    #[clap(subcommand)]
+    Testnet(StartOptions),
+}
+
+```
+
+Now we want to create a `StartOptions` structure that will allow us to tell our indexer where to start indexing from. The command should look like:
 
 ```bash
 ./target/release mainnet from-latest
