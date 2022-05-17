@@ -81,7 +81,7 @@ tokio-stream = { version = "0.1" }
 tracing = "0.1.13"
 tracing-subscriber = "0.2.4"
 
-near-lake-framework = "0.3.0"
+near-lake-framework = "0.4.0"
 
 ```
 
@@ -286,7 +286,7 @@ async fn main() -> Result<(), tokio::io::Error> {
 
     let config: LakeConfig = opts.clone().into();
 
-    let stream = near_lake_framework::streamer(config);
+    let (_, stream) = near_lake_framework::streamer(config);
 
 ```
 
@@ -301,7 +301,7 @@ async fn main() -> Result<(), tokio::io::Error> {
 
     let config: LakeConfig = opts.clone().into();
 
-    let stream = near_lake_framework::streamer(config);
+    let (_, stream) = near_lake_framework::streamer(config);
 
     let watching_list = opts
         .accounts
@@ -325,7 +325,7 @@ async fn main() -> Result<(), tokio::io::Error> {
 
     let config: LakeConfig = opts.clone().into();
 
-    let stream = near_lake_framework::streamer(config);
+    let (_, stream) = near_lake_framework::streamer(config);
 
     let watching_list = opts
         .accounts
@@ -433,7 +433,7 @@ We are posting the complete diffs for the reference
  tracing-subscriber = "0.2.4"
 
 -near-indexer = { git = "https://github.com/near/nearcore", rev = "25b000ae4dd9fe784695d07a3f2e99d82a6f10bd" }
-+near-lake-framework = "0.3.0"
++near-lake-framework = "0.4.0"
 ```
 
 ```diff title=src/configs.rs
@@ -629,7 +629,7 @@ We are posting the complete diffs for the reference
 -                sync_mode: near_indexer::SyncModeEnum::FromInterruption,
 -                await_for_node_synced: near_indexer::AwaitForNodeSyncedEnum::WaitForFullSync,
 -            };
-+    let stream = near_lake_framework::streamer(config);
++    let (_, stream) = near_lake_framework::streamer(config);
 
 -            // Boilerplate code to start the indexer itself
 -            let sys = actix::System::new();
