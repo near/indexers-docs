@@ -273,7 +273,7 @@ As for the `logs`, we know that the `EcecutionOutcome.logs` is an array of strin
 
 :::warning Keep in mind
 
-`ExecutionOutcomes.logs` we deal with is an array of strings. And it's not guaranteed that all the elements are Events-compatible. We might have just a string log element.
+`ExecutionOutcomes.logs` is an array of strings. And it's not guaranteed that all the elements are Events-compatible. We might have just a string log element.
 
 :::
 
@@ -431,9 +431,9 @@ https://paras.id/token/[1]::[2]/[3]
 
 Where:
 
-[1] - Paras contract address (`x.paras.near`)
-[2] - First part of the `token_id` (`EventLogData.data` for Paras is an array of objects with `token_ids` key in it. Those IDs represented by numbers with column `:` between them)
-[3] - `token_id` itself
+- [1] - Paras contract address (`x.paras.near`)
+- [2] - First part of the `token_id` (`EventLogData.data` for Paras is an array of objects with `token_ids` key in it. Those IDs represented by numbers with column `:` between them)
+- [3] - `token_id` itself
 
 Example:
 
@@ -459,8 +459,8 @@ https://www.mintbase.io/thing/[1]:[2]
 
 Where:
 
-[1] - `meta_id` (`EventLogData.data` for Mintbase is an array of stringified JSON that contains `meta_id`)
-[2] - Store contract account address (basically Receipt's receiver ID)
+- [1] - `meta_id` (`EventLogData.data` for Mintbase is an array of stringified JSON that contains `meta_id`)
+- [2] - Store contract account address (basically Receipt's receiver ID)
 
 Example:
 
@@ -491,7 +491,7 @@ Not it's a perfect time to add another `.map()` to the data we have collected. W
 
 Note, we have added `.flat()`, it's because we don't want to have an array of arrays.
 
-Let's start crafting the links, Time to say "Hi!" to [Riqi](https://twitter.com/hdriqi) (just because we can):
+Let's start crafting the links. Time to say "Hi!" to [Riqi](https://twitter.com/hdriqi) (just because we can):
 
 ```ts title=index.ts
   .map(relevantOutcome => {
@@ -518,7 +518,7 @@ Checkout how we have used `ParasEventLogData` we have defined earlier.
 
 :::
 
-Mintbase turn, we hope [Nate](https://twitter.com/nategeier) and his team have migrated to NEAR Lake Framework already, saying "Hi!" and crafting the link:
+Mintbase turn, we hope [Nate](https://twitter.com/nategeier) and his team have [migrated to NEAR Lake Framework](./migrating-to-near-lake-framework) already, saying "Hi!" and crafting the link:
 
 ```ts title=index.ts
   ...
