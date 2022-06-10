@@ -1,0 +1,23 @@
+---
+slug: 2022-06-10-updates
+title: Jun 10, 2022 Updates
+authors: [khorolets, telezhnaya, frol, tiffany]
+tags: [updates]
+---
+
+👋 How's it going, everyone? It's another Friday and another update of the Data Platform Team.
+
+We know you might miss the Data Platform Community Meeting, and be sure we missed you too. Though we got you covered and we've published the recording of the meeting, so you can watch it. Please, enjoy [the recording on YouTube](https://youtu.be/SuFR36u5zm0)
+
+As we told you, this week our main focus remains the same: the new version of Indexer for Explorer (codename Data Warehouse) and the Alert Feature for DevConsole.
+
+Let's move on to updates:
+
+<!-- truncate -->
+
+- We finally made the decision about our new DB. We have a working prototype of the new Indexer based on AWS AuroraDB. Write performance is 3-4 times better compared to our current Postgres solution. `select` statements performance has a huge variation, and the median time is close to Postgres, we continue improving this. Discussion: https://near.zulipchat.com/#narrow/stream/302244-Data-Center/topic/Data.20Warehouse (@telezhnaya)
+- During this week we've identified the Alert types, started to design the database schema, and we have a draft implementation of the Alert indexer (codename Alertexer). We're moving closer to the point where we can show the demo. (@khorolets)
+
+That's pretty much it, we're working hard to keep rocking 🤘! Stay tuned, reach out if you have questions. See you all next week!
+
+Have a question about indexers? Post it on [StackOverflow with tags `nearprotocol` and `indexer`](https://stackoverflow.com/questions/tagged/nearprotocol+indexer) to get an answer!
