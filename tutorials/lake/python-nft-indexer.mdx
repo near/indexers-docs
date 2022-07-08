@@ -1,6 +1,6 @@
 ---
 sidebar_position: 7
-sidebar_label: NFT indexer for python
+sidebar_label: NFT indexer for Python
 ---
 
 import ProgrammingLanguage from '@site/src/components/ProgrammingLanguage';
@@ -151,30 +151,31 @@ Now we want to deal only with those ExecutionOutcomes that contain logs of Event
 
 Also, we don't require all the data from ExecutionOutcome, let's handle it:
 
-```ts title=index.ts
-async function handle_streamer_message(streamer_message: types.StreamerMessage
-): Promise<void> {
-  const relevantOutcomes = streamerMessage
-    .shards
-    .flatMap(shard => shard.receiptExecutionOutcomes)
-    .map(outcome => ({
-      receipt: {
-        id: outcome.receipt.receiptId,
-        receiverId: outcome.receipt.receiverId,
-      },
-      events: outcome.executionOutcome.outcome.logs.map(
-        (log: string): EventLogData => {
-          const [_, probablyEvent] = log.match(/^EVENT_JSON:(.*)$/) ?? []
-          try {
-            return JSON.parse(probablyEvent)
-          } catch (e) {
-            return
-          }
+```python
+def parse_probably_event(log: str) -> Optional[EventLogData]:
+    (_, probablyEvent) = re.find_all("/^EVENT_JSON:(.*)$/", log) or []
+
+    try:
+        return json.loads(probablyEvent)
+    except:
+        return None
+
+
+async def handle_streamer_message(streamer_message: near_primitives.StreamerMessage):
+    relevantOutcomes = [
+        {
+            receipt: {
+                id: outcome.receipt.receiptId,
+                receiver_id: outcome.receipt.receiverId,
+            }
+            events: filter(event != None, [
+                    parse_probably_event(log)
+                    for log in outcome.executionOutcome.outcome.logs
+                ]
+            )
         }
-      )
-      .filter(event => event !== undefined)
-    }))
-}
+        for outcome in [shard.receiptExecutionOutcomes for shard in streamer_message.shards]
+    ]
 ```
 
 Let us explain what we are doing here:
@@ -188,12 +189,8 @@ Fine, so now we have only a list of our objects that contain some Receipt data a
 
 The goal for our indexer is to return the useful data about a minted NFT that follows NEP-171 standard. We need to drop irrelevant standard Events:
 
-```ts title=index.ts
-    .filter(relevantOutcome =>
-      relevantOutcome.events.some(
-        event => event.standard === "nep171" && event.event === "nft_mint"
-      )
-    )
+```python
+    filter(any([event.standard == "nep171" and event.event == "nft_mint" for event in relevant_outcome.events]), relevant_outcome)
 ```
 
 ## Almost done
@@ -202,46 +199,49 @@ So far we have collected everything we need corresponding to our requirements.
 
 We can print everything in the end of the `handle_streamer_message`:
 
-```ts title=index.ts
-  relevantOutcomes.length && console.dir(relevantOutcomes, { depth: 10 })
+```python
+    return len(relevant_outcomes) and dir(relevant_outcomes)
 ```
 
 The final look of the `handle_streamer_message` function:
 
-```ts title=index.ts
-async function handleStreamerMessage(
-  streamerMessage: types.StreamerMessage
-): Promise<void> {
-  const relevantOutcomes = streamerMessage
-    .shards
-    .flatMap(shard => shard.receiptExecutionOutcomes)
-    .map(outcome => ({
-      receipt: {
-        id: outcome.receipt.receiptId,
-        receiverId: outcome.receipt.receiverId,
-      },
-      events: outcome.executionOutcome.outcome.logs.map(
-        (log: string): EventLogData => {
-          const [_, probablyEvent] = log.match(/^EVENT_JSON:(.*)$/) ?? []
-          try {
-            return JSON.parse(probablyEvent)
-          } catch (e) {
-            return
-          }
-        }
-      )
-      .filter(event => event !== undefined)
-    }))
-    .filter(relevantOutcome =>
-      relevantOutcome.events.some(
-        event => event.standard === "nep171" && event.event === "nft_mint"
-      )
-    )
+```python
+def parse_probably_event(log: str) -> Optional[EventLogData]:
+    (_, probablyEvent) = re.find_all("/^EVENT_JSON:(.*)$/", log) or []
 
-  relevantOutcomes.length && console.dir(relevantOutcomes, { depth: 10 })
-}
+    try:
+        return json.loads(probablyEvent)
+    except:
+        return None
 
+
+async def handle_streamer_message(streamer_message: near_primitives.StreamerMessage):
+    relevantOutcomes = [
+        filter(
+            any(
+                [
+                    event.standard == "nep171" and event.event == "nft_mint" for event in relevant_outcome.events
+                ]
+            ), relevant_outcome)
+            for relevant_outcome in [
+            {
+                receipt: {
+                    id: outcome.receipt.receiptId,
+                    receiver_id: outcome.receipt.receiverId,
+                }
+                events: filter(event != None, [
+                        parse_probably_event(log)
+                        for log in outcome.executionOutcome.outcome.logs
+                    ]
+                )
+            }
+            for outcome in [shard.receiptExecutionOutcomes for shard in streamer_message.shards]
+        ]
+    ]
+
+    return len(relevant_outcomes) and dir(relevant_outcomes)
 ```
+
 
 And if we run our indexer we will be catching `nft_mint` event and print the data in the terminal.
 
@@ -288,8 +288,8 @@ Let's add the interface for later use somewhere after `interface EventLogData`:
 ```python
 @dataclass
 class ParasEventLogData:
-  owner_id: str,
-  token_ids: typing.List[str],
+  owner_id: str
+  token_ids: typing.List[str]
 ```
 
 ### Mintbase token URL
@@ -320,40 +320,40 @@ class MintbaseEventLogData:
     memo: str
 ```
 
-Now it's a perfect time to add another `.map()`, but it might be too much. So let's proceed with a forloop to craft the output data we want to print.
+Now it's a perfect time to add another list comprehension, but it might be too much. So let's proceed with a forloop to craft the output data we want to print.
 
-```ts title=index.ts
-let output = []
-for (let relevantOutcome of relevantOutcomes) {
-  let marketplace = "Unknown"
-  let nfts = []
+```python
+output = []
 
-
-}
+for relevant_outcome in relevant_outcomes:
+    marketplace = "Unknown"
+    nfts = []
 ```
 
 We're going to print the marketplace name, Receipt id so you would be able to search for it on [NEAR Explorer](https://explorer.near.org) and the list of links to the NFTs along with the owner account name.
 
 Let's start crafting the links. Time to say "Hi!" to [Riqi](https://twitter.com/hdriqi) (just because we can):
 
-```ts title=index.ts
-let output = []
-  for (let relevantOutcome of relevantOutcomes) {
-    let marketplace = "Unknown"
-    let nfts = []
-    if (relevantOutcome.receipt.receiverId.endsWith(".paras.near")) {
-      marketplace = "Paras"
-      nfts = relevantOutcome.events.flatMap(event => {
-        return (event.data as ParasEventLogData[])
-          .map(eventData => ({
-            owner: eventData.owner_id,
-            links: eventData.token_ids.map(
-              tokenId => `https://paras.id/token/${relevantOutcome.receipt.receiverId}::${tokenId.split(":")[0]}/${tokenId}`
-            )
-           })
-        )
-      })
-    }
+```python
+output = []
+
+for relevant_outcome in relevant_outcomes:
+    marketplace = "Unknown"
+    nfts = []
+
+    if relevantOutcome.receipt.receiverId.endsWith(".paras.near"):
+        marketplace = "Paras"
+        nfts = [
+            lambda event: [
+                owner: event_data.owner_id,
+                links: [
+                    f"https://paras.id/token/{relevant_outcome.receipt.receiverId}::{token_id.split(":")[0]}/{token_id}"
+                    for token_id in event_data.token_ids
+                ]
+                for event_data in event.data
+            ]
+            for event in relevant_outcome.events
+        ]
 ```
 
 A few words about what is going on here. If the Receipt's receiver account name ends with `.paras.near` (e.g. `x.paras.near`) we assume it's from Paras marketplace, so we are changing the corresponding variable.
@@ -362,20 +362,19 @@ After that we iterate over the Events and its `data` using the `ParasEventLogDat
 
 Mintbase turn, we hope [Nate](https://twitter.com/nategeier) and his team have [migrated to NEAR Lake Framework](./migrating-to-near-lake-framework) already, saying "Hi!" and crafting the link:
 
-```ts title=index.ts
-  } else if (relevantOutcome.receipt.receiverId.match(/\.mintbase\d+\.near$/)) {
-      marketplace = "Mintbase"
-      nfts = relevantOutcome.events.flatMap(event => {
-        return (event.data as MintbaseEventLogData[])
-          .map(eventData => {
-          const memo = JSON.parse(eventData.memo)
-          return {
-            owner: eventData.owner_id,
-            links: [`https://mintbase.io/thing/${memo["meta_id"]}:${relevantOutcome.receipt.receiverId}`]
-          }
-        })
-      })
-    }
+```python
+    else if re.search(relevant_outcome.receipt.receiverId):
+        marketplace = "Mintbase"
+        nfts = [
+            lambda event: [
+                {
+                    owner: event_data.owner_id,
+                    links: [f"https://mintbase.io/thing/${json.loads(eventData.memo)["meta_id"]}:{relevant_outcome.receipt.receiverId}"]
+                }
+                for event_data in event.data
+            ]
+            for event in relevantOutcome.events
+        ]
 ```
 
 Almost the same story as with Paras, but a little bit more complex. The nature of Mintbase marketplace is that it's not a single marketplace! Every Mintbase user has their own store and a separate contract. And it looks like those contract addresses follow the same principle they end with `.mintbaseN.near` where `N` is number (e.g. `nate.mintbase1.near`).
@@ -387,10 +386,12 @@ After we have defined that the ExecutionOutcome receiver is from Mintbase we are
 
 And if we can't determine the marketplace, we still want to return something, so let's return Events data as is:
 
-```ts title=index.ts
-  } else {
-    nfts = relevantOutcome.events.flatMap(event => event.data)
-  }
+```python
+    else:
+        nfts = [
+            event.data
+            for event in relevant_outcome.events
+        ]
 ```
 
 It's time to push the collected data to the `output`
@@ -405,64 +406,68 @@ output.append({
 
 And make it print the output to the terminal:
 
-```ts title=index.ts
-if (output.length) {
-  console.log(`We caught freshly minted NFTs!`)
-  console.dir(output, { depth: 5 })
-}
+```python
+if output:
+    print("We caught freshly minted NFTs!")
+    dir(output)
 ```
 
 All together:
 
-```ts title=index.ts
-  let output = []
-  for (let relevantOutcome of relevantOutcomes) {
-    let marketplace = "Unknown"
-    let nfts = []
-    if (relevantOutcome.receipt.receiverId.endsWith(".paras.near")) {
-      marketplace = "Paras"
-      nfts = relevantOutcome.events.flatMap(event => {
-        return (event.data as ParasEventLogData[])
-          .map(eventData => ({
-            owner: eventData.owner_id,
-            links: eventData.token_ids.map(
-              tokenId => `https://paras.id/token/${relevantOutcome.receipt.receiverId}::${tokenId.split(":")[0]}/${tokenId}`
-            )
-           })
-        )
-      })
-    } else if (relevantOutcome.receipt.receiverId.match(/\.mintbase\d+\.near$/)) {
-      marketplace = "Mintbase"
-      nfts = relevantOutcome.events.flatMap(event => {
-        return (event.data as MintbaseEventLogData[])
-          .map(eventData => {
-          const memo = JSON.parse(eventData.memo)
-          return {
-            owner: eventData.owner_id,
-            links: [`https://mintbase.io/thing/${memo["meta_id"]}:${relevantOutcome.receipt.receiverId}`]
-          }
-        })
-      })
-    } else {
-      nfts = relevantOutcome.events.flatMap(event => event.data)
-    }
-    output.push({
-      receiptId: relevantOutcome.receipt.id,
-      marketplace,
-      createdOn,
-      nfts,
-    })
-  }
-  if (output.length) {
-    console.log(`We caught freshly minted NFTs!`)
-    console.dir(output, { depth: 5 })
-  }
+```python
+output = []
+
+for relevant_outcome in relevant_outcomes:
+    marketplace = "Unknown"
+    nfts = []
+
+    if relevantOutcome.receipt.receiverId.endsWith(".paras.near"):
+        marketplace = "Paras"
+        nfts = [
+            lambda event: [
+                owner: event_data.owner_id,
+                links: [
+                    f"https://paras.id/token/{relevant_outcome.receipt.receiverId}::{token_id.split(":")[0]}/{token_id}"
+                    for token_id in event_data.token_ids
+                ]
+                for event_data in event.data
+            ]
+            for event in relevant_outcome.events
+        ]
+    else if re.search(relevant_outcome.receipt.receiverId):
+        marketplace = "Mintbase"
+        nfts = [
+            lambda event: [
+                {
+                    owner: event_data.owner_id,
+                    links: [f"https://mintbase.io/thing/${json.loads(eventData.memo)["meta_id"]}:{relevant_outcome.receipt.receiverId}"]
+                }
+                for event_data in event.data
+            ]
+            for event in relevantOutcome.events
+        ]
+    else:
+        nfts = [
+            event.data
+            for event in relevant_outcome.events
+        ]
+    
+    output.append({
+        receipt_id: relevant_outcome.receipt.id,
+        marketplace,
+        nfts
+        }
+    )
+
+    if output:
+        print("We caught freshly minted NFTs!")
+        dir(output)
 ```
 
 OK, how about the date and time of the NFT mint? Let's add to the beginning of the `handle_streamer_message` function
 
 ```python
-const created_on = streamer_message.block.header.timestamp / 1000000
+created_on = datetime.fromtimestamp(streamer_message.block.header.timestamp / 1000000)
 ```
 
 Update the `output.append()` expression:
@@ -472,8 +477,9 @@ output.append({
     receipt_id: relevant_outcome.receipt.id,
     marketplace,
     created_on,
-    nfts,
-})
+    nfts
+    }
+)
 ```
 
 And not that's it. Run the indexer to watch for NFT minting and never miss a thing.
