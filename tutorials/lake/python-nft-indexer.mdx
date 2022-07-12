@@ -69,7 +69,7 @@ config.aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
 config.aws_secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
 ```
 
-Just a few words on the config, function `mainnet()` has set `s3_bucket_name`, `s3_region_name`for mainnet and fresh-ish block height for `start_block_height`. You can go to [NEAR Explorer](https://explorer.near.org) and get **the freshest** block height for your setup. Though you can use the same as we do.
+Just a few words on the config, function `mainnet()` has set `s3_bucket_name`, `s3_region_name`for mainnet and recent block height for `start_block_height`. You can go to [NEAR Explorer](https://explorer.near.org) and get **the most recent** block height for your setup. Though you can use the same as we do.
 
 Now we need to create a callback function that we'll be called to handle [`StreamerMessage`](/docs/data-flow-and-structures/structures/toc) our indexer receives.
 
