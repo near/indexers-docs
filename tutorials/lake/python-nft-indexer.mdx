@@ -78,6 +78,15 @@ config.aws_secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
 
 Just a few words on the config, function `mainnet()` has set `s3_bucket_name`, `s3_region_name`for mainnet and recent block height for `start_block_height`. You can go to [NEAR Explorer](https://explorer.near.org) and get **the most recent** block height for your setup. Though you can use the same as we do.
 
+Let's call `streamer` function with the `config`
+
+```python
+stream_handle, streamer_messages_queue = streamer(config)
+while True:
+    streamer_message = await streamer_messages_queue.get()
+```
+
+
 And an actual start of our indexer in the end of the `main.py`
 
 ```python
@@ -100,7 +109,6 @@ async def main():
     stream_handle, streamer_messages_queue = streamer(config)
     while True:
         streamer_message = await streamer_messages_queue.get()
-        await handle_streamer_message(streamer_message)
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
@@ -203,6 +211,11 @@ async def handle_streamer_message(streamer_message: near_primitives.StreamerMess
                 print(parsed_log)
 ```
 
+Now let's call `handle_streamer_message` inside the loop in `main` function
+
+```python
+await handle_streamer_message(streamer_message)
+```
 
 And if we run our indexer we will be catching `nft_mint` event and print logs in the terminal.
 
@@ -235,22 +248,13 @@ https://paras.id/token/[1]::[2]/[3]
 Where:
 
 - [1] - Paras contract address (`x.paras.near`)
-- [2] - First part of the `token_id` (`EventLogData.data` for Paras is an array of objects with `token_ids` key in it. Those IDs represented by numbers with column `:` between them)
+- [2] - First part of the `token_id` (`parsed_log["data"]` for Paras is an array of objects with `token_ids` key in it. Those IDs represented by numbers with column `:` between them)
 - [3] - `token_id` itself
 
 Example:
 
 ```
 https://paras.id/token/x.paras.near::387427/387427:373
-```
-
-Let's add the interface for later use somewhere after `interface EventLogData`:
-
-```python
-@dataclass
-class ParasEventLogData:
-  owner_id: str
-  token_ids: typing.List[str]
 ```
 
 ### Mintbase token URL
@@ -263,7 +267,7 @@ https://www.mintbase.io/thing/[1]:[2]
 
 Where:
 
-- [1] - `meta_id` (`EventLogData.data` for Mintbase is an array of stringified JSON that contains `meta_id`)
+- [1] - `meta_id` (`parsed_log["data"]` for Mintbase is an array of stringified JSON that contains `meta_id`)
 - [2] - Store contract account address (basically Receipt's receiver ID)
 
 Example:
