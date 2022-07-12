@@ -60,6 +60,13 @@ In the `main.py` let's import `stream` function and `near_primitives` from `near
 from near_lake_framework import near_primitives, LakeConfig, streamer
 ```
 
+Add the main function
+
+```python
+async def main():
+    print("Starting NFT indexer")
+```
+
 Add the instantiation of `LakeConfig` below:
 
 ```python
@@ -70,22 +77,6 @@ config.aws_secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
 ```
 
 Just a few words on the config, function `mainnet()` has set `s3_bucket_name`, `s3_region_name`for mainnet and recent block height for `start_block_height`. You can go to [NEAR Explorer](https://explorer.near.org) and get **the most recent** block height for your setup. Though you can use the same as we do.
-
-Now we need to create a callback function that we'll be called to handle [`StreamerMessage`](/docs/data-flow-and-structures/structures/toc) our indexer receives.
-
-```python
-async def handle_streamer_message(streamer_message: near_primitives.StreamerMessage):
-    pass
-```
-
-:::info Callback function requirements
-
-In `near-lake-framework` Python package the handler have to be presented as a callback function. This function have to:
-- be asynchronous
-- accept an argument of type [`StreamerMessage`](/docs/data-flow-and-structures/structures/toc)
-- return nothing (`void`)
-
-:::
 
 And an actual start of our indexer in the end of the `main.py`
 
@@ -98,8 +89,9 @@ The final `main.py` at this moment should look like the following:
 
 ```python
 from near_lake_framework import LakeConfig, streamer, near_primitives
-
 async def main():
+    print("Starting NFT indexer")
+    
     config = LakeConfig.mainnet()
     config.start_block_height = 69030747
     config.aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
@@ -112,6 +104,13 @@ async def main():
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
+```
+
+Now we need to create a callback function that we'll be called to handle [`StreamerMessage`](/docs/data-flow-and-structures/structures/toc) our indexer receives.
+
+```python
+async def handle_streamer_message(streamer_message: near_primitives.StreamerMessage):
+    pass
 ```
 
 ## Events and where to catch them
