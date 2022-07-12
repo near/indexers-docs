@@ -11,19 +11,19 @@ import ProgrammingLanguage from '@site/src/components/ProgrammingLanguage';
 
 :::note Source code for the tutorial
 
-[`near-examples/near-lake-nft-indexer`](https://github.com/near-examples/near-lake-nft-indexer): source code for this tutorial
+[`frolvanya/near-lake-nft-indexer`](https://github.com/frolvanya/near-lake-nft-indexer): source code for this tutorial
 
 :::
 
 ## The End
 
 This tutorial ends with a working NFT indexer built on top [NEAR Lake Framework for Python](/docs/projects/near-lake-framework). The indexer is watching for `nft_mint` [Events](https://nomicon.io/Standards/EventsFormat) and prints some relevant data:
-- `receiptId` of the [Receipt](/docs/data-flow-and-structures/structures/receipt) where the mint has happened
+- `receipt_id` of the [Receipt](/docs/data-flow-and-structures/structures/receipt) where the mint has happened
 - Marketplace
 - NFT owner account name
 - Links to the NFTs on the marketplaces
 
-The final source code is available on the GitHub [`near-examples/near-lake-nft-indexer`](https://github.com/near-examples/near-lake-nft-indexer)
+The final source code is available on the GitHub [`frolvanya/near-lake-nft-indexer`](https://github.com/frolvanya/near-lake-nft-indexer)
 
 ## Motivation
 
@@ -57,16 +57,16 @@ touch main.py
 In the `main.py` let's import `stream` function and `near_primitives` from `near-lake-framework`:
 
 ```python
-from near_lake_framework import LakeConfig, streamer, near_primitives
+from near_lake_framework import near_primitives, LakeConfig, streamer
 ```
 
 Add the instantiation of `LakeConfig` below:
 
 ```python
 config = LakeConfig.mainnet()
-config.start_block_height = 69130938
-config.aws_access_key_id = "YOUR_ACCESS_KEY_ID"
-config.aws_secret_key = "YOUR_SECRET_KEY"
+config.start_block_height = 69030747
+config.aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
+config.aws_secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
 ```
 
 Just a few words on the config, function `mainnet()` has set `s3_bucket_name`, `s3_region_name`for mainnet and fresh-ish block height for `start_block_height`. You can go to [NEAR Explorer](https://explorer.near.org) and get **the freshest** block height for your setup. Though you can use the same as we do.
@@ -74,7 +74,7 @@ Just a few words on the config, function `mainnet()` has set `s3_bucket_name`, `
 Now we need to create a callback function that we'll be called to handle [`StreamerMessage`](/docs/data-flow-and-structures/structures/toc) our indexer receives.
 
 ```python
-async def handle_streamer_message(streamerMessage: near_primitives.StreamerMessage):
+async def handle_streamer_message(streamer_message: near_primitives.StreamerMessage):
     pass
 ```
 
@@ -91,7 +91,7 @@ And an actual start of our indexer in the end of the `main.py`
 
 ```python
 loop = asyncio.get_event_loop()
-loop.run_until_complete(handle_streamer_message())
+loop.run_until_complete(main())
 ```
 
 The final `main.py` at this moment should look like the following:
@@ -99,16 +99,19 @@ The final `main.py` at this moment should look like the following:
 ```python
 from near_lake_framework import LakeConfig, streamer, near_primitives
 
-config = LakeConfig.mainnet()
-config.start_block_height = 69130938
-config.aws_access_key_id = "YOUR_ACCESS_KEY_ID"
-config.aws_secret_key = "YOUR_SECRET_KEY"
+async def main():
+    config = LakeConfig.mainnet()
+    config.start_block_height = 69030747
+    config.aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
+    config.aws_secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
 
-async def handle_streamer_message(streamer_message: near_primitives.StreamerMessage):
-    pass
+    stream_handle, streamer_messages_queue = streamer(config)
+    while True:
+        streamer_message = await streamer_messages_queue.get()
+        await handle_streamer_message(streamer_message)
 
 loop = asyncio.get_event_loop()
-loop.run_until_complete(handle_streamer_message())
+loop.run_until_complete(main())
 ```
 
 ## Events and where to catch them
@@ -122,16 +125,6 @@ First of all let's find out where we can catch the Events. We hope you are famil
 
 This leads us to the realization that we can watch only for ExecutionOutcomes and ignore everything else `StreamerMessage` brings us.
 
-Also, we need to define an interface to catch the Events. Let's copy the interface definition from the [Events Nomicon page](https://nomicon.io/Standards/EventsFormat#events) and paste it before the `handle_streamer_message` function.
-
-```python
-@dataclass
-class EventLogData:
-    standard: str
-    version: str
-    event: str
-    data: typing.Any
-```
 
 ## Catching only the data we need
 
@@ -139,114 +132,83 @@ Inside the callback function `handle_streamer_message` we've prepared in the [Pr
 
 ```python
 async def handle_streamer_message(streamer_message: near_primitives.StreamerMessage):
-    relevant_outcomes = [
-        shard.receiptExecutionOutcomes
-        for shard in streamer_message.shards
-    ]
+    for shard in streamer_message.shards:
+        for receipt_execution_outcome in shard.receipt_execution_outcomes:
+            for log in receipt_execution_outcome.execution_outcome.outcome.logs:
+                pass
 ```
 
-We have iterated through all the [Shards](/docs/data-flow-and-structures/structures/shard) and collected the lists of all ExecutionOutcomes into a single list (in our case we don't care on which Shard did the mint happen)
+We have iterated through the logs of all ExecutionOutcomes of [Shards](/docs/data-flow-and-structures/structures/shard) (in our case we don't care on which Shard did the mint happen)
 
 Now we want to deal only with those ExecutionOutcomes that contain logs of Events format. Such logs start with `EVENT_JSON:` according to the [Events docs](https://nomicon.io/Standards/EventsFormat#events).
 
-Also, we don't require all the data from ExecutionOutcome, let's handle it:
-
 ```python
-def parse_probably_event(log: str) -> Optional[EventLogData]:
-    (_, probablyEvent) = re.find_all("/^EVENT_JSON:(.*)$/", log) or []
-
-    try:
-        return json.loads(probablyEvent)
-    except:
-        return None
-
-
 async def handle_streamer_message(streamer_message: near_primitives.StreamerMessage):
-    relevantOutcomes = [
-        {
-            receipt: {
-                id: outcome.receipt.receiptId,
-                receiver_id: outcome.receipt.receiverId,
-            }
-            events: filter(event != None, [
-                    parse_probably_event(log)
-                    for log in outcome.executionOutcome.outcome.logs
-                ]
-            )
-        }
-        for outcome in [shard.receiptExecutionOutcomes for shard in streamer_message.shards]
-    ]
+    for shard in streamer_message.shards:
+        for receipt_execution_outcome in shard.receipt_execution_outcomes:
+            for log in receipt_execution_outcome.execution_outcome.outcome.logs:
+                if not log.startswith("EVENT_JSON:"):
+                    continue
+                try:
+                    parsed_log = json.loads(log[len("EVENT_JSON:") :])
+                except json.JSONDecodeError:
+                    print(
+                        f"Receipt ID: `{receipt_execution_outcome.receipt.receipt_id}`\nError during parsing logs from JSON string to dict"
+                    )
+                    continue
 ```
 
 Let us explain what we are doing here:
 
-1. We are walking through the ExecutionOutcomes
-2. We are constructing a list of objects containing `receipt` (it's id and the receiver) and `events` containing the Events
-3. In order to collect the Events we are iterating through the ExecutionOutcome's logs trying to parse Event using regular expression. We're returning `undefined` if we fail to parse `EventLogData`
-4. Finally once `events` list is collected we're filtering it dropping the `undefined`
-
-Fine, so now we have only a list of our objects that contain some Receipt data and the list of successfully parsed `EventLogData`.
+1. We are walking through the logs in ExecutionOutcomes
+2. We are filtering ExecutionOutcomes that contain logs of Events format
+3. In order to collect the Events we are iterating through the ExecutionOutcome's logs trying to parse Event using `json.loads`
 
 The goal for our indexer is to return the useful data about a minted NFT that follows NEP-171 standard. We need to drop irrelevant standard Events:
 
 ```python
-    filter(any([event.standard == "nep171" and event.event == "nft_mint" for event in relevant_outcome.events]), relevant_outcome)
+    if (
+        parsed_log.get("standard") != "nep171"
+        or parsed_log.get("event") != "nft_mint"
+    ):
+        continue
 ```
 
 ## Almost done
 
 So far we have collected everything we need corresponding to our requirements.
 
-We can print everything in the end of the `handle_streamer_message`:
-
-```python
-    return len(relevant_outcomes) and dir(relevant_outcomes)
-```
-
 The final look of the `handle_streamer_message` function:
 
 ```python
-def parse_probably_event(log: str) -> Optional[EventLogData]:
-    (_, probablyEvent) = re.find_all("/^EVENT_JSON:(.*)$/", log) or []
-
-    try:
-        return json.loads(probablyEvent)
-    except:
-        return None
-
-
 async def handle_streamer_message(streamer_message: near_primitives.StreamerMessage):
-    relevantOutcomes = [
-        filter(
-            any(
-                [
-                    event.standard == "nep171" and event.event == "nft_mint" for event in relevant_outcome.events
-                ]
-            ), relevant_outcome)
-            for relevant_outcome in [
-            {
-                receipt: {
-                    id: outcome.receipt.receiptId,
-                    receiver_id: outcome.receipt.receiverId,
-                }
-                events: filter(event != None, [
-                        parse_probably_event(log)
-                        for log in outcome.executionOutcome.outcome.logs
-                    ]
-                )
-            }
-            for outcome in [shard.receiptExecutionOutcomes for shard in streamer_message.shards]
-        ]
-    ]
+    for shard in streamer_message.shards:
+        for receipt_execution_outcome in shard.receipt_execution_outcomes:
+            for log in receipt_execution_outcome.execution_outcome.outcome.logs:
+                if not log.startswith("EVENT_JSON:"):
+                    continue
+                try:
+                    parsed_log = json.loads(log[len("EVENT_JSON:") :])
+                except json.JSONDecodeError:
+                    print(
+                        f"Receipt ID: `{receipt_execution_outcome.receipt.receipt_id}`\nError during parsing logs from JSON string to dict"
+                    )
+                    continue
 
-    return len(relevant_outcomes) and dir(relevant_outcomes)
+                if (
+                    parsed_log.get("standard") != "nep171"
+                    or parsed_log.get("event") != "nft_mint"
+                ):
+                    continue
+
+                print(parsed_log)
 ```
 
 
-And if we run our indexer we will be catching `nft_mint` event and print the data in the terminal.
+And if we run our indexer we will be catching `nft_mint` event and print logs in the terminal.
 
 ```bash
-python main.py
+python3 main.py
 ```
 
 :::note
@@ -259,7 +221,7 @@ Not so fast! Remember we were talking about having the links to the marketplaces
 
 ## Crafting links to Paras and Mintbase for NFTs minted there
 
-At this moment we have an array of objects we've crafted on the fly that exposes receipt, execution status and event logs. We definitely know that all the data we have at this moment are relevant for us, and we want to extend it with the links to that minted NFTs at least for those marketplaces we know.
+At this moment we have an access to logs that follows NEP-171 standard. We definitely know that all the data we have at this moment are relevant for us, and we want to extend it with the links to that minted NFTs at least for those marketplaces we know.
 
 We know and love Paras and Mintbase.
 
@@ -311,175 +273,166 @@ Example:
 https://www.mintbase.io/thing/70eES-icwSw9iPIkUluMHOV055pKTTgQgTiXtwy3Xus:vnartistsdao.mintbase1.near
 ```
 
-Let's add the interface for later use somewhere after `interface EventLogData`:
+Let's start crafting the links:
 
 ```python
-@dataclass
-class MintbaseEventLogData:
-    owner_id: str
-    memo: str
+def format_paras_nfts(data, receipt_execution_outcome):
+    links = []
+
+    for data_element in data:
+        for token_id in data_element.get("token_ids", []):
+            first_part_of_token_id = token_id.split(":")[0]
+            links.append(
+                f"https://paras.id/token/{receipt_execution_outcome.receipt.receiver_id}::{first_part_of_token_id}/{token_id}"
+            )
+
+    return {"owner": data[0].get("owner_id"), "links": links}
+
+def format_mintbase_nfts(data, receipt_execution_outcome):
+    links = []
+    for data_block in data:
+        try:
+            memo = json.loads(data_block.get("memo"))
+        except json.JSONDecodeError:
+            print(
+                f"Receipt ID: `{receipt_execution_outcome.receipt.receipt_id}`\nMemo: `{memo}`\nError during parsing Mintbase memo from JSON string to dict"
+            )
+            return
+
+        meta_id = memo.get("meta_id")
+        links.append(
+            f"https://www.mintbase.io/thing/{meta_id}:{receipt_execution_outcome.receipt.receiver_id}"
+        )
+
+    return {"owner": data[0].get("owner_id"), "links": links}
 ```
 
-Now it's a perfect time to add another list comprehension, but it might be too much. So let's proceed with a forloop to craft the output data we want to print.
+We're going to print the receipt_id, so you would be able to search for it on [NEAR Explorer](https://explorer.near.org), marketplace name and the list of links to the NFTs along with the owner account name.
 
 ```python
-output = []
-
-for relevant_outcome in relevant_outcomes:
-    marketplace = "Unknown"
-    nfts = []
-```
-
-We're going to print the marketplace name, Receipt id so you would be able to search for it on [NEAR Explorer](https://explorer.near.org) and the list of links to the NFTs along with the owner account name.
-
-Let's start crafting the links. Time to say "Hi!" to [Riqi](https://twitter.com/hdriqi) (just because we can):
-
-```python
-output = []
-
-for relevant_outcome in relevant_outcomes:
-    marketplace = "Unknown"
-    nfts = []
-
-    if relevantOutcome.receipt.receiverId.endsWith(".paras.near"):
-        marketplace = "Paras"
-        nfts = [
-            lambda event: [
-                owner: event_data.owner_id,
-                links: [
-                    f"https://paras.id/token/{relevant_outcome.receipt.receiverId}::{token_id.split(":")[0]}/{token_id}"
-                    for token_id in event_data.token_ids
-                ]
-                for event_data in event.data
-            ]
-            for event in relevant_outcome.events
-        ]
+if receipt_execution_outcome.receipt.receiver_id.endswith(
+    ".paras.near"
+):
+    output = {
+        "receipt_id": receipt_execution_outcome.receipt.receipt_id,
+        "marketplace": "Paras",
+        "nfts": format_paras_nfts(
+            parsed_log["data"], receipt_execution_outcome
+        ),
+    }
 ```
 
 A few words about what is going on here. If the Receipt's receiver account name ends with `.paras.near` (e.g. `x.paras.near`) we assume it's from Paras marketplace, so we are changing the corresponding variable.
 
-After that we iterate over the Events and its `data` using the `ParasEventLogData` we've defined earlier. Collecting a list of objects with the NFTs owner and NFTs links.
-
 Mintbase turn, we hope [Nate](https://twitter.com/nategeier) and his team have [migrated to NEAR Lake Framework](./migrating-to-near-lake-framework) already, saying "Hi!" and crafting the link:
 
 ```python
-    else if re.search(relevant_outcome.receipt.receiverId):
-        marketplace = "Mintbase"
-        nfts = [
-            lambda event: [
-                {
-                    owner: event_data.owner_id,
-                    links: [f"https://mintbase.io/thing/${json.loads(eventData.memo)["meta_id"]}:{relevant_outcome.receipt.receiverId}"]
-                }
-                for event_data in event.data
-            ]
-            for event in relevantOutcome.events
-        ]
+    elif re.search(
+        ".mintbase\d+.near", receipt_execution_outcome.receipt.receiver_id
+    ):
+        output = {
+            "receipt_id": receipt_execution_outcome.receipt.receipt_id,
+            "marketplace": "Mintbase",
+            "nfts": format_mintbase_nfts(
+                parsed_log["data"], receipt_execution_outcome
+            ),
+        }
+    else:
+        continue
 ```
 
 Almost the same story as with Paras, but a little bit more complex. The nature of Mintbase marketplace is that it's not a single marketplace! Every Mintbase user has their own store and a separate contract. And it looks like those contract addresses follow the same principle they end with `.mintbaseN.near` where `N` is number (e.g. `nate.mintbase1.near`).
 
 After we have defined that the ExecutionOutcome receiver is from Mintbase we are doing the same stuff as with Paras:
 
-1. Changing the `marketplace` variable
+1. Setting the `marketplace` variable to Mintbase
 2. Collecting the list of NFTs with owner and crafted links
-
-And if we can't determine the marketplace, we still want to return something, so let's return Events data as is:
-
-```python
-    else:
-        nfts = [
-            event.data
-            for event in relevant_outcome.events
-        ]
-```
-
-It's time to push the collected data to the `output`
-
-```python
-output.append({
-    receipt_id: relevant_outcome.receipt.id,
-    marketplace,
-    nfts,
-})
-```
 
 And make it print the output to the terminal:
 
 ```python
-if output:
-    print("We caught freshly minted NFTs!")
-    dir(output)
+print(json.dumps(output, indent=4))
 ```
 
 All together:
 
 ```python
-output = []
+def format_paras_nfts(data, receipt_execution_outcome):
+    links = []
 
-for relevant_outcome in relevant_outcomes:
-    marketplace = "Unknown"
-    nfts = []
+    for data_element in data:
+        for token_id in data_element.get("token_ids", []):
+            first_part_of_token_id = token_id.split(":")[0]
+            links.append(
+                f"https://paras.id/token/{receipt_execution_outcome.receipt.receiver_id}::{first_part_of_token_id}/{token_id}"
+            )
 
-    if relevantOutcome.receipt.receiverId.endsWith(".paras.near"):
-        marketplace = "Paras"
-        nfts = [
-            lambda event: [
-                owner: event_data.owner_id,
-                links: [
-                    f"https://paras.id/token/{relevant_outcome.receipt.receiverId}::{token_id.split(":")[0]}/{token_id}"
-                    for token_id in event_data.token_ids
-                ]
-                for event_data in event.data
-            ]
-            for event in relevant_outcome.events
-        ]
-    else if re.search(relevant_outcome.receipt.receiverId):
-        marketplace = "Mintbase"
-        nfts = [
-            lambda event: [
-                {
-                    owner: event_data.owner_id,
-                    links: [f"https://mintbase.io/thing/${json.loads(eventData.memo)["meta_id"]}:{relevant_outcome.receipt.receiverId}"]
-                }
-                for event_data in event.data
-            ]
-            for event in relevantOutcome.events
-        ]
-    else:
-        nfts = [
-            event.data
-            for event in relevant_outcome.events
-        ]
-    
-    output.append({
-        receipt_id: relevant_outcome.receipt.id,
-        marketplace,
-        nfts
-        }
-    )
+    return {"owner": data[0].get("owner_id"), "links": links}
 
-    if output:
-        print("We caught freshly minted NFTs!")
-        dir(output)
-```
 
-OK, how about the date and time of the NFT mint? Let's add to the beginning of the `handle_streamer_message` function
+def format_mintbase_nfts(data, receipt_execution_outcome):
+    links = []
+    for data_block in data:
+        try:
+            memo = json.loads(data_block.get("memo"))
+        except json.JSONDecodeError:
+            print(
+                f"Receipt ID: `{receipt_execution_outcome.receipt.receipt_id}`\nMemo: `{memo}`\nError during parsing Mintbase memo from JSON string to dict"
+            )
+            return
 
-```python
-created_on = datetime.fromtimestamp(streamer_message.block.header.timestamp / 1000000)
-```
+        meta_id = memo.get("meta_id")
+        links.append(
+            f"https://www.mintbase.io/thing/{meta_id}:{receipt_execution_outcome.receipt.receiver_id}"
+        )
 
-Update the `output.append()` expression:
+    return {"owner": data[0].get("owner_id"), "links": links}
 
-```python
-output.append({
-    receipt_id: relevant_outcome.receipt.id,
-    marketplace,
-    created_on,
-    nfts
-    }
-)
+
+async def handle_streamer_message(streamer_message: near_primitives.StreamerMessage):
+    for shard in streamer_message.shards:
+        for receipt_execution_outcome in shard.receipt_execution_outcomes:
+            for log in receipt_execution_outcome.execution_outcome.outcome.logs:
+                if not log.startswith("EVENT_JSON:"):
+                    continue
+                try:
+                    parsed_log = json.loads(log[len("EVENT_JSON:") :])
+                except json.JSONDecodeError:
+                    print(
+                        f"Receipt ID: `{receipt_execution_outcome.receipt.receipt_id}`\nError during parsing logs from JSON string to dict"
+                    )
+                    continue
+
+                if (
+                    parsed_log.get("standard") != "nep171"
+                    or parsed_log.get("event") != "nft_mint"
+                ):
+                    continue
+
+                if receipt_execution_outcome.receipt.receiver_id.endswith(
+                    ".paras.near"
+                ):
+                    output = {
+                        "receipt_id": receipt_execution_outcome.receipt.receipt_id,
+                        "marketplace": "Paras",
+                        "nfts": format_paras_nfts(
+                            parsed_log["data"], receipt_execution_outcome
+                        ),
+                    }
+                elif re.search(
+                    ".mintbase\d+.near", receipt_execution_outcome.receipt.receiver_id
+                ):
+                    output = {
+                        "receipt_id": receipt_execution_outcome.receipt.receipt_id,
+                        "marketplace": "Mintbase",
+                        "nfts": format_mintbase_nfts(
+                            parsed_log["data"], receipt_execution_outcome
+                        ),
+                    }
+                else:
+                    continue
+
+                print(json.dumps(output, indent=4))
 ```
 
 And not that's it. Run the indexer to watch for NFT minting and never miss a thing.
@@ -497,36 +450,26 @@ Having troubles running the indexer? Please, check you haven't skipped the [Cred
 Example output:
 
 ```
-We caught freshly minted NFTs!
-[
-  {
-    receiptId: '2y5XzzL1EEAxgq8EW3es2r1dLLkcecC6pDFHR12osCGk',
-    marketplace: 'Paras',
-    createdOn: 2022-05-24T09:35:57.831Z,
-    nfts: [
-      {
-        owner: 'dccc.near',
-        links: [ 'https://paras.id/token/x.paras.near::398089/398089:17' ]
-      }
-    ]
-  }
-]
-We caught freshly minted NFTs!
-[
-  {
-    receiptId: 'BAVZ92XdbkAPX4DkqW5gjCvrhLX6kGq8nD8HkhQFVt5q',
-    marketplace: 'Mintbase',
-    createdOn: 2022-05-24T09:36:00.411Z,
-    nfts: [
-      {
-        owner: 'chiming.near',
-        links: [
-          'https://mintbase.io/thing/HOTcn6LTo3qTq8bUbB7VwA1GfSDYx2fYOqvP0L_N5Es:vnartistsdao.mintbase1.near'
+{
+    "receipt_id": "8rMK8rxb3WmFcSfM3ahFoeeoBF92pad3tpsqKoSWurr2",
+    "marketplace": "Mintbase",
+    "nfts": {
+        "owner": "vn-artists-dao.near",
+        "links": [
+            "https://www.mintbase.io/thing/aqdCBHB9_2XZY7pwXRRu5rGDeLQl7Q8KgNud1wKgnGo:vnartistsdao.mintbase1.near"
         ]
-      }
-    ]
-  }
-]
+    }
+}
+{
+    "receipt_id": "ArRh94Fe1LKF9yPrAdzrMozWoxMVQbEW2Z2Zf4fsSsce",
+    "marketplace": "Paras",
+    "nfts": {
+        "owner": "eeaeb516e0945893ac01eaf547f499abdbd344831c5fcbefa1a5c0a9f303cc5c",
+        "links": [
+            "https://paras.id/token/x.paras.near::432714/432714:1"
+        ]
+    }
+}
 ```
 
 ## Conclusion
