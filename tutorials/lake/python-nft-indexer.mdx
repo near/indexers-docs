@@ -56,20 +56,20 @@ touch main.py
 
 In the `main.py` let's import `stream` function and `near_primitives` from `near-lake-framework`:
 
-```python
+```python title=main.py
 from near_lake_framework import near_primitives, LakeConfig, streamer
 ```
 
 Add the main function
 
-```python
+```python title=main.py
 async def main():
     print("Starting NFT indexer")
 ```
 
 Add the instantiation of `LakeConfig` below:
 
-```python
+```python title=main.py
 config = LakeConfig.mainnet()
 config.start_block_height = 69030747
 config.aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
@@ -81,7 +81,7 @@ You can go to [NEAR Explorer](https://explorer.near.org) and get **the most rece
 
 Let's call `streamer` function with the `config`
 
-```python
+```python title=main.py
 stream_handle, streamer_messages_queue = streamer(config)
 while True:
     streamer_message = await streamer_messages_queue.get()
@@ -90,14 +90,14 @@ while True:
 
 And an actual start of our indexer in the end of the `main.py`
 
-```python
+```python title=main.py
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
 ```
 
 The final `main.py` at this moment should look like the following:
 
-```python
+```python title=main.py
 from near_lake_framework import LakeConfig, streamer, near_primitives
 async def main():
     print("Starting NFT indexer")
@@ -117,7 +117,7 @@ loop.run_until_complete(main())
 
 Now we need to create a callback function that we'll be called to handle [`StreamerMessage`](/docs/data-flow-and-structures/structures/toc) our indexer receives.
 
-```python
+```python title=main.py
 async def handle_streamer_message(streamer_message: near_primitives.StreamerMessage):
     pass
 ```
@@ -138,7 +138,7 @@ This leads us to the realization that we can watch only for ExecutionOutcomes an
 
 Inside the callback function `handle_streamer_message` we've prepared in the [Preparation](#preparation) section let's start filtering the data we need:
 
-```python
+```python title=main.py
 async def handle_streamer_message(streamer_message: near_primitives.StreamerMessage):
     for shard in streamer_message.shards:
         for receipt_execution_outcome in shard.receipt_execution_outcomes:
@@ -150,7 +150,7 @@ We have iterated through the logs of all ExecutionOutcomes of [Shards](/docs/dat
 
 Now we want to deal only with those ExecutionOutcomes that contain logs of Events format. Such logs start with `EVENT_JSON:` according to the [Events docs](https://nomicon.io/Standards/EventsFormat#events).
 
-```python
+```python title=main.py
 async def handle_streamer_message(streamer_message: near_primitives.StreamerMessage):
     for shard in streamer_message.shards:
         for receipt_execution_outcome in shard.receipt_execution_outcomes:
@@ -174,7 +174,7 @@ Let us explain what we are doing here:
 
 The goal for our indexer is to return the useful data about a minted NFT that follows NEP-171 standard. We need to drop irrelevant standard Events:
 
-```python
+```python title=main.py
     if (
         parsed_log.get("standard") != "nep171"
         or parsed_log.get("event") != "nft_mint"
@@ -188,7 +188,7 @@ So far we have collected everything we need corresponding to our requirements.
 
 The final look of the `handle_streamer_message` function:
 
-```python
+```python title=main.py
 async def handle_streamer_message(streamer_message: near_primitives.StreamerMessage):
     for shard in streamer_message.shards:
         for receipt_execution_outcome in shard.receipt_execution_outcomes:
@@ -214,7 +214,7 @@ async def handle_streamer_message(streamer_message: near_primitives.StreamerMess
 
 Now let's call `handle_streamer_message` inside the loop in `main` function
 
-```python
+```python title=main.py
 await handle_streamer_message(streamer_message)
 ```
 
@@ -279,7 +279,7 @@ https://www.mintbase.io/thing/70eES-icwSw9iPIkUluMHOV055pKTTgQgTiXtwy3Xus:vnarti
 
 Let's start crafting the links:
 
-```python
+```python title=main.py
 def format_paras_nfts(data, receipt_execution_outcome):
     links = []
 
@@ -313,7 +313,7 @@ def format_mintbase_nfts(data, receipt_execution_outcome):
 
 We're going to print the receipt_id, so you would be able to search for it on [NEAR Explorer](https://explorer.near.org), marketplace name and the list of links to the NFTs along with the owner account name.
 
-```python
+```python title=main.py
 if receipt_execution_outcome.receipt.receiver_id.endswith(
     ".paras.near"
 ):
@@ -330,7 +330,7 @@ A few words about what is going on here. If the Receipt's receiver account name 
 
 Mintbase turn, we hope [Nate](https://twitter.com/nategeier) and his team have [migrated to NEAR Lake Framework](./migrating-to-near-lake-framework) already, saying "Hi!" and crafting the link:
 
-```python
+```python title=main.py
     elif re.search(
         ".mintbase\d+.near", receipt_execution_outcome.receipt.receiver_id
     ):
@@ -354,13 +354,13 @@ After we have defined that the ExecutionOutcome receiver is from Mintbase we are
 
 And make it print the output to the terminal:
 
-```python
+```python title=main.py
 print(json.dumps(output, indent=4))
 ```
 
 All together:
 
-```python
+```python title=main.py
 def format_paras_nfts(data, receipt_execution_outcome):
     links = []
 
