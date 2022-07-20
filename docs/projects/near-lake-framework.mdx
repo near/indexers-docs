@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 3
 ---
 
 # NEAR Lake Framework
@@ -12,7 +12,7 @@ https://github.com/near/near-lake-framework/
 
 ## Description
 
-NEAR Lake Framework is a small library companion to [NEAR Lake](./near-lake). It allows you to build your own indexer that subscribes to the stream of blocks from the [NEAR Lake](./near-lake) data source and create your own logic to process the NEAR Protocol data.
+NEAR Lake Framework is an ecosystem of library companions to [NEAR Lake](./near-lake-indexer). They allow you to build your own indexer that subscribes to the stream of blocks from the [NEAR Lake](./near-lake-indexer) data source and create your own logic to process the NEAR Protocol data in the programming languages of your choice (at the moment, there are implementations in Rust, JavaScript, and Python).
 
 :::tip NEAR Lake Framework announcement
 
@@ -23,13 +23,23 @@ Please, read the post [there](https://gov.near.org/t/announcement-near-lake-fram
 :::
 
 
-## Why is it better than [NEAR Indexer Framework](./near-indexer-framework)
+## How does it compare to [NEAR Indexer Framework](./near-indexer-framework)?
 
-- MVP version of NEAR Lake Framework consumes **~145MB of RAM** and we’re going to improve it
-- It doesn’t depend on [`nearcore`](https://github.com/near/nearcore) and it is not a NEAR node so you don’t need to upgrade it every time nearcore cuts a release
-- No syncing process is involved anymore, so even if your indexer got stuck you can restart it from any block and run with it immediately
-- There is no huge data folder anymore, so you don’t need to pay for quite expensive 1TB SSD drives
-- Want to debug your indexer on mainnet locally? No problem, do whatever you need
+Feature | Indexer Framework | Lake Framework
+------- | ----------------- | --------------
+Allows to follow the blocks and transactions in the NEAR Protocol | **Yes** | **Yes**<br />(but only mainnet and testnet networks)
+Decentralized | **Yes** | No<br />(Pagoda Inc provides the data)
+Estimated cost of infrastructure | $500+/mo | **$20/mo**
+Ease of maintenance | Advanced<br />(need to follow every nearcore upgrade, and sync state) | **Easy**<br />(deploy once and forget)
+How long will it take to start? | days (on mainnet/testnet) | **seconds**
+Ease of local development | Advanced<br />(localnet is a good option, but testing on testnet/mainnet is too heavy) | **Easy**<br />(see [tutorials](/tutorials/intro))
+
+
+## What is the cost of running a custom indexer based on NEAR Lake?
+
+Indexers that are based on NEAR Lake consume 100-500MB of RAM depending on the size of preloading queue, it does not require any storage, and it takes quite a bit of CPU power, so even Raspberry PI will do the job.
+
+Getting the blockchain data from S3 will cost around $20 per month as NEAR Lake configured S3 buckets in such a way that the reader is paying the costs.
 
 
 ## Examples & Tutorials
