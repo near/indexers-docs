@@ -1,12 +1,12 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 ---
 
-# NEAR Lake
+# NEAR Lake Indexer
 
 :::note GitHub repo
 
-https://github.com/near/near-lake/
+https://github.com/near/near-lake-indexer/
 
 :::
 
@@ -17,7 +17,7 @@ https://github.com/near/near-lake/
 
 NEAR Lake is an indexer built on top of [NEAR Indexer Framework](./near-indexer-framework) to watch the network and store all the events as JSON files on AWS S3.
 
-## Concept
+## History
 
 We used to have [NEAR Indexer for Explorer](./near-indexer-for-explorer) that was watching for the network and stored all the events to PostgreSQL database. PostgreSQL became the main bottleneck for us. After some brainstorming sessions and researches we decided to go with SingleStore database.
 
