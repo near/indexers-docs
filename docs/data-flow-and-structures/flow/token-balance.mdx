@@ -4,7 +4,7 @@ sidebar_position: 10
 
 # Token Balance
 
-Examples from our [RPC](https://docs.near.org/docs/develop/front-end/rpc) are used. If you want to look at information about archival nodes (more than 2 days ago), please use `archival` prefix in your URL (e.g. `https://archival-rpc.mainnet.near.org`) In this article, we always use `POST` methods to the same URL `https://archival-rpc.mainnet.near.org`. Body:
+Examples from our [RPC](https://docs.near.org/api/rpc/introduction) are used. If you want to look at information about archival nodes (more than 2 days ago), please use `archival` prefix in your URL (e.g. `https://archival-rpc.mainnet.near.org`) In this article, we always use `POST` methods to the same URL `https://archival-rpc.mainnet.near.org`. Body:
 
 ```
 {
@@ -15,7 +15,7 @@ Examples from our [RPC](https://docs.near.org/docs/develop/front-end/rpc) are us
 }
 ```
 
-Every [account](https://docs.near.org/docs/develop/front-end/rpc#view-account) has liquid balance (called `amount`) and stake (called `locked`). All calculation in tables are in yoctonear.
+Every [account](https://docs.near.org/api/rpc/contracts#view-account) has liquid balance (called `amount`) and stake (called `locked`). All calculation in tables are in yoctonear.
 
 Total supply is the amount of tokens in the whole system. Each example is selected at the moment when no other changes is performed in the blockchain, so the only example could affect total supply.
 
