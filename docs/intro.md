@@ -46,9 +46,9 @@ The dApp has a helper deployed somewhere off-chain, and this helper has code tha
 
 ### Getting the data from a blockchain from the external world
 
-NEAR blockchain implements a [JSON-RPC endpoint](https://docs.near.org/docs/api/rpc) for everyone to interact with the blockchain. Through the JSON-RPC API users can call smart-contracts triggering them to be executed with given parameters. Also, users can view the data from the blockchain.
+NEAR blockchain implements a [JSON-RPC endpoint](https://docs.near.org/api/rpc/introduction) for everyone to interact with the blockchain. Through the JSON-RPC API users can call smart-contracts triggering them to be executed with given parameters. Also, users can view the data from the blockchain.
 
-So, continuing with our example we can make our helper pull a [Block](https://docs.near.org/docs/api/rpc/block-chunk#block) every second, then pull all the [Chunks](https://docs.near.org/docs/api/rpc/block-chunk#chunk) and analyze the Transactions included in the Block to check if there is a transaction to our smart-contract with "buy an e-book" function call. If we observe such a Transaction, we need to ensure it is successful to prevent sending the e-book to the user if the "buy e-book" Transaction has failed.
+So, continuing with our example we can make our helper pull a [Block](https://docs.near.org/api/rpc/block-chunk#block) every second, then pull all the [Chunks](https://docs.near.org/api/rpc/block-chunk#chunk) and analyze the Transactions included in the Block to check if there is a transaction to our smart-contract with "buy an e-book" function call. If we observe such a Transaction, we need to ensure it is successful to prevent sending the e-book to the user if the "buy e-book" Transaction has failed.
 
 After the process is complete we can trigger the helper's code to send the user an email with the e-book they bought.
 
