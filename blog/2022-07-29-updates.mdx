@@ -1,0 +1,33 @@
+---
+slug: 2022-07-29-updates
+title: Jul 29, 2022 Updates
+authors: [khorolets, telezhnaya, frol, tiffany]
+tags: [updates]
+---
+
+How's it going, everyone? The Data Platform Teams is here, though you knew it before you started to read it, did you? 😘
+
+It was a pleasure to see you all at our Community Meeting. Quick recap if you've missed it while the recording is not published:
+
+- We've done a recap of the purpose of existing the Indexer toolset and where to find the docs about it. https://near-indexers.io
+- We've given an overview of the state of NEAR Enhanced APIs
+- Announced the [NEAR Lake Framework on Python](https://github.com/frolvanya/near-lake-framework-py) 🐍
+
+OK, let's move on to this week's updates:
+<!-- truncate -->
+
+- Our shiny [Near Enhanced API](https://github.com/near/near-enhanced-api-server) is in the active stage of development!
+    - We have made one more step to support pagination in the API: added tracking of absolute amount values for FT contracts in the DB https://github.com/near/near-indexer-events (@telezhnaya)
+    - Added the info about failed FT/NFT movements to the Indexer DB (@telezhnaya)
+    - Working on the support of [legacy contracts](https://github.com/near/near-indexer-events) (`wrap.near` and others). It will allow us to show `wrap.near` data in the [API](https://github.com/near/near-enhanced-api-server) (@telezhnaya)
+- Alert Feature for DevConsole is now empowered with Account Balances rules. Users can set up an Alert when their balances are changed in either a range of amounts or a range of percents (@khorolets)
+
+That's pretty much all for this week. Stay tuned, stay with us! Don't stop rocking 🤘 See you all next week!
+
+Have a question about indexers? Post it on [StackOverflow with tags `nearprotocol` and `indexer`](https://stackoverflow.com/questions/tagged/nearprotocol+indexer) to get an answer!
+
+---
+
+Data Platform Feedback
+You can reach out to Tiffany Gao (Data Platform Product Manager) to share any feedback about this update or your experience using any Data Platform products:
+[30m Calendly Timeslot](https://calendly.com/tiffany-236/30min) | [tiffany@near.org](mailto:tiffany@near.org) | [Discord](https://discord.com/channels/490367152054992913/542945453533036544) | [Twitter](https://twitter.com/TiffanyYijiaGao)
