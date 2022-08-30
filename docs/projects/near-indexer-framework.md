@@ -40,7 +40,7 @@ NEAR Indexer Framework only exposes the blocks that were finalized. In NEAR Prot
 * Once the transaction is included in a block, it will produce a receipt which often will be executed in the next block (another 1.2-second delay) - learn more about the NEAR Protocol data flow [here](../../data-flow-and-structures/flow/near-data-flow)
 * Given that block finalization takes 3 blocks (1.2 seconds * 3), Indexer Framework will only get the opportunity to start collecting the information about the block where the transaction was included 3.6 seconds later, but we should also include at least a 50ms delay that is introduced by the network latency when produced blocks propagate back from the validation nodes back to the regular nodes
 * Indexer Framework then collects all the bits of information for the produced block and streams it: around 50-100ms
-* Your indexer implementation receives the block and there could be additional delays down the line, but that is outside of our scope here
+* Custom indexer implementation receives the block and there could be additional delays down the line, but that is outside of our scope here
 
 Ultimately, it takes at least 3.8 seconds from the moment one submits a transaction to the network, and Indexer Framework-based indexer picks it up, where the finalization time contributes the most of the delay. In real life scenario, dApps usually need to know the result of the execution, and so it will take a couple of blocks after the transaction is included to get all the receipts executed (read more about the data flow [here](../../data-flow-and-structures/flow/near-data-flow)), so the delay between the transaction submission and the result being observed by an indexer could be 5-7 seconds.
 
