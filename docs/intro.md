@@ -4,40 +4,38 @@ sidebar_position: 1
 
 # Indexers Doc
 
-Welcome to the Indexers Doc. Here you will find everything you might need about indexers.
-
-In order to help everyone to understand the concept of indexer and to provide you with all the inputs so you can build your own indexer.
+Welcome to the Indexers Doc. Here you will find everything you need to know in order to familiarize yourself with the concept of indexers and even build your own one.
 
 :::info Disclaimer
 
-Explanation on this page assumes you have a certain level of understanding of the blockhains.
+The explanation on this page assumes you have a certain level of understanding of the blockchain technology.
 
 :::
 
 
 ## What is indexer?
 
-### Blockchains and it's nature
+### Blockchains and their nature
 
-Blockchain data is optimized for serialized **writes**, one block at a time, as the chain is being created. Querying the blockchain for data about a specific block or account is fairly straightforward or a "narrow" query. However, querying data across many blocks can be cumbersome because we have to aggregate results from multiple single-block queries. We can consider these *"wide" queries*.
+Blockchain data is optimized for serialized **writes**, one block at a time, as the chain is being created. Querying the blockchain for data about a specific block or account is fairly straightforward or a "narrow" query. However, querying data across many blocks can be cumbersome because we have to aggregate results from multiple single-block queries. Therefore, we can consider these *"wide" queries*.
 
-Given the fact that a blockchain itself is a distributed database, and a smart-contract (decentralized application, dApp) is an application that runs on a virtual machine inside a blockchain, we need to understand that smart-contracts should *not* be considered as a "backend". While some applications might consist only of smart-contracts, building a dApp with only smart-contracts, in most cases, is not possible.
+Given the fact that a blockchain itself is a distributed database, and a smart contract (decentralized application, dApp) is an application that runs on a virtual machine inside a blockchain, we need to understand that smart contracts should *not* be considered as a "backend". While some applications might consist only of smart contracts, building a dApp with only smart contracts, in most cases, is not possible.
 
-Smart-contracts are limited in terms of interactions. By "interactions" we mean things that are very common in the real-world, like user notifications, integration with third-party applications, etc.
+Smart contracts are limited in terms of interactions. By "interactions" we mean things that are very common in the real world, like user notifications, integration with third-party applications, etc.
 
-However, the nature of a blockchain is that it *must* be deterministic. A critical feature of a blockchain is that it knows state at a given time, and for blockchains that time unit is a block. Think of them as being snapshots. A blockchain does snapshots of it's state on every block. We as users can call smart-contracts for a specific block, and the blockchain provides guarantees that execution will always produce the same result for the same block any time we call it.
+However, the nature of a blockchain is that it *must* be deterministic. A critical feature of a blockchain is that it knows the state at a given time, and for blockchains that time unit is a block. Think of them as being snapshots. A blockchain does snapshots of its state on every block. We as users can call smart contracts for a specific block, and the blockchain provides guarantees that execution will always produce the same result for the same block any time we call it.
 
-The deterministic nature of a blockchain closes it from external (off-chain) variables. It is totally impossible to perform a call to an API from within a smart-contract. A blockchain and a smart-contract are closed-off from the external (off-chain) world
+The deterministic nature of a blockchain closes it from external (off-chain) variables. It is totally impossible to perform a call to an API from within a smart contract. A blockchain and a smart contract are closed off from the external (off-chain) world.
 
 ![Blockchain closed from outer world](/docs/intro/blockchain.png)
 
 Blockchains are great at providing a way to apply the requested changes to the state in a decentralized manner. However, in order to observe the changes, you need to actively pull the information from the network.
 
-Instead of abstractive explanations let's look at an example.
+Instead of abstract explanations let's look at an example.
 
 :::note Example dApp
 
-Say, we have a smart-contract that is selling e-books. Once a user bought a book we want to send him a copy via email.
+Say, we have a smart contract that sells e-books. Once a user buys a book we want to send them a copy via email.
 
 :::
 
@@ -46,13 +44,13 @@ The dApp has a helper deployed somewhere off-chain, and this helper has code tha
 
 ### Getting the data from a blockchain from the external world
 
-NEAR blockchain implements a [JSON-RPC endpoint](https://docs.near.org/api/rpc/introduction) for everyone to interact with the blockchain. Through the JSON-RPC API users can call smart-contracts triggering them to be executed with given parameters. Also, users can view the data from the blockchain.
+NEAR blockchain implements a [JSON-RPC endpoint](https://docs.near.org/api/rpc/introduction) for everyone to interact with the blockchain. Through the JSON-RPC API users can call smart contracts triggering them to be executed with given parameters. Also, users can view the data from the blockchain.
 
-So, continuing with our example we can make our helper pull a [Block](https://docs.near.org/api/rpc/block-chunk#block) every second, then pull all the [Chunks](https://docs.near.org/api/rpc/block-chunk#chunk) and analyze the Transactions included in the Block to check if there is a transaction to our smart-contract with "buy an e-book" function call. If we observe such a Transaction, we need to ensure it is successful to prevent sending the e-book to the user if the "buy e-book" Transaction has failed.
+So, continuing with our example we can make our helper pull a [Block](https://docs.near.org/api/rpc/block-chunk#block) every second, then pull all the [Chunks](https://docs.near.org/api/rpc/block-chunk#chunk) and analyze the Transactions included in the Block to check if there is a transaction to our smart contract with "buy an e-book" function call. If we observe such a Transaction, we need to ensure it is successful, so we don't send the e-book to a user whose "buy e-book" Transaction failed.
 
 After the process is complete we can trigger the helper's code to send the user an email with the e-book they bought.
 
-This approach is so called *pull model* of getting the data. There is nothing wrong with this approach, but sometimes you might find it is not the most comfortable or reliable approach.
+This approach is so-called *pull model* of getting the data. There is nothing wrong with this approach, but sometimes you might find it is not the most comfortable or reliable approach.
 
 Also, not all the data is available through the JSON-RPC. *Local Receipts* for example are not available through the JSON-RPC, because they are not stored in NEAR node's internal database.
 
@@ -83,7 +81,7 @@ To query data across many blocks requires the aggregation of results from multip
 
 Because indexers listen to the *stream of data* from the blockchain and the data can be immediately filtered and processed according to defined requirements, they can be used to simplify the "wide" queries execution. For example, a stream of data can be written to a permanent database for later data analysis using a convenient query language like SQL. That is what [Indexer for Explorer](./projects/near-indexer-for-explorer.mdx) is doing.
 
-Another example that highlights the need for a "wide query" is when you use a seed phrase to recover one or more accounts. Since a seed phrase essentially represents a signing key pair, the recovery is for all accounts that share the associated public key. Therefore, when a seed phrase is used to recover an account via [NEAR Wallet](https://wallet.near.org), the query requires that all accounts with a matching public key are found and recovered. [NEAR Indexer for Explorer](./projects/near-indexer-for-explorer.mdx) is storing this data to a permanent database and this allows [NEAR Wallet](https://wallet.near.org) to perform such "wide queries". This is impossible to achieve using JSON-RPC only.
+Another example that highlights the need for a "wide query" is when you use a seed phrase to recover one or more accounts. Since a seed phrase essentially represents a signing key pair, the recovery is for all accounts that share the associated public key. Therefore, when a seed phrase is used to recover an account via [NEAR Wallet](https://wallet.near.org), the query requires that all accounts with a matching public key are found and recovered. [NEAR Indexer for Explorer](./projects/near-indexer-for-explorer.mdx) is storing this data in a permanent database and this allows [NEAR Wallet](https://wallet.near.org) to perform such "wide queries". This is impossible to achieve using JSON-RPC only.
 
 ## Summary
 

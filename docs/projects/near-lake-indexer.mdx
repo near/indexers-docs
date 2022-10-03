@@ -19,11 +19,11 @@ NEAR Lake is an indexer built on top of [NEAR Indexer Framework](./near-indexer-
 
 ## History
 
-We used to have [NEAR Indexer for Explorer](./near-indexer-for-explorer) that was watching for the network and stored all the events to PostgreSQL database. PostgreSQL became the main bottleneck for us. After some brainstorming sessions and researches we decided to go with SingleStore database.
+We used to have [NEAR Indexer for Explorer](./near-indexer-for-explorer) watching the network and storing all the events in a PostgreSQL database. Unfortunately, in time, PostgreSQL became the main bottleneck for us. So after some brainstorming/research sessions, we decided to go with a SingleStore database instead.
 
-Knowing the fact that [NEAR Explorer](https://explorer.near.org) is not the only project that uses the [Indexer for Explorer](./near-indexer-for-explorer)'s database, we wanted to come up with the concept that will allow us to cover even more projects that can benefit from the data from NEAR Protocol.
+Knowing the fact that [NEAR Explorer](https://explorer.near.org) is not the only project that uses the [Indexer for Explorer](./near-indexer-for-explorer)'s database, we wanted to come up with a concept that will allow us to cover even more projects that can benefit from the data from NEAR Protocol.
 
-That's why we decided to store the data from the blockchain as JSON files on AWS S3 bucket that can be used as a data source for different projects.
+That's why we decided to store the data from the blockchain as JSON files on an AWS S3 bucket that can be used as a data source for different projects.
 
 As "Indexer for Explorer Remake" project we are going to have `near-lake` as a data writer. There's going to be another project that will read from AWS S3 bucket and will store all the data in SingleStore database. This will replace [NEAR Indexer for Explorer](./near-indexer-for-explorer) PostgreSQL database at some moment and will become the main source for NEAR Explorer.
 
@@ -57,7 +57,7 @@ The data structure we use is the following:
       shard_N.json
 ```
 
-`<block_height>` is a 12-character-long [`u64`](https://doc.rust-lang.org/std/primitive.u64.html) string with leading zeros (e.g "000042839521"). See [this issue for a reasoning](https://github.com/near/near-lake/issues/23).
+`<block_height>` is a 12-character-long [`u64`](https://doc.rust-lang.org/std/primitive.u64.html) string with leading zeros (e.g "000042839521"). See [this issue for reasoning](https://github.com/near/near-lake/issues/23).
 
 `block_json` contains JSON-serialized `BlockView` struct. **NB!** this struct might change in the future, we will announce it
 
@@ -70,8 +70,8 @@ We have created [NEAR Lake Framework](./near-lake-framework) to have a simple st
 
 :::tip NEAR Lake Framework announcement
 
-We have announced the release of NEAR Lake Framework on NEAR Gov forum
+We have announced the release of NEAR Lake Framework on NEAR Governance Forum.
 
-Please, read the post [there](https://gov.near.org/t/announcement-near-lake-framework-brand-new-word-in-indexer-building-approach/17668)
+Please, read the post [there](https://gov.near.org/t/announcement-near-lake-framework-brand-new-word-in-indexer-building-approach/17668).
 
 :::

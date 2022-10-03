@@ -32,11 +32,11 @@ As scaling dApps enter NEAR’s mainnet, an issue may arise: how do they quickly
 
 NEAR Indexer Framework embeds the full NEAR node and thus requires to sync with the peer-to-peer network and store all the network data locally thus it is subject to the storage requirements, which is hundreds of GBs on SSD if you only need to extract the data that is not older than ~2.5 days, and thousands of GBs on SSD if you want to be able to go over the whole history of the network. Also, the network sync process is known to be extremely slow (while the block production is 1 block per second, while the block sync usually reaches 2 blocks per second, which means that it is capable to catch up with the live network at a speed of 1 block per second, so if your node was offline for one hour, it will take one hour to catch up to the tip of the network that keeps getting freshly produced blocks).
 
-NEAR Indexer Framework only exposes the blocks that were finalized. In NEAR Protocol, it takes 3 consecutive blocks to get the block finalized which means that there is at least a 3-second delay between the time when some transaction hit the network, and the time it is finalized and streamed from NEAR Indexer Framework. If we measure the delay between the moment when a transaction gets submitted from the client device to the moment Indexer Framework-based indexer would receive it, we can see the following timings:
+NEAR Indexer Framework only exposes the blocks that were finalized. In NEAR Protocol, it takes 3 consecutive blocks to get the block finalized which means that there is at least a 3-second delay between the time when some transaction hits the network, and the time it is finalized and streamed from NEAR Indexer Framework. If we measure the delay between the moment when a transaction gets submitted from the client device to the moment Indexer Framework-based indexer would receive it, we can see the following timings:
 
 * A serialized transaction being transferred over the Internet to NEAR node (most commonly, through [NEAR JSON RPC broadcast_tx_commit](https://docs.near.org/api/rpc/transactions#send-transaction-await)): around 50ms (it is not measured precisely as it is mostly network latency of TCP handshake + HTTPS handshake)
 * The transaction is routed to the [validation node](https://near-nodes.io/intro/what-is-a-node): around 50ms (again, mostly network latency between the peer nodes)
-* The transaction arrives in the mempool on the validation node and will be delayed at least until the next chunk/block will be produced, so if the transaction was received right at the moment when transactions for the current block were selected, it will take 1.2 seconds on mainnet to get the next block produced
+* The transaction arrives in the mempool on the validation node and will be delayed at least until the next chunk/block is produced, so if the transaction was received right at the moment when transactions for the current block were selected, it would take 1.2 seconds on mainnet to get the next block produced
 * Once the transaction is included in a block, it will produce a receipt which often will be executed in the next block (another 1.2-second delay) - learn more about the NEAR Protocol data flow [here](../data-flow-and-structures/flow/near-data-flow)
 * Given that block finalization takes 3 blocks (1.2 seconds * 3), Indexer Framework will only get the opportunity to start collecting the information about the block where the transaction was included 3.6 seconds later, but we should also include at least a 50ms delay that is introduced by the network latency when produced blocks propagate back from the validation nodes back to the regular nodes
 * Indexer Framework then collects all the bits of information for the produced block and streams it: around 50-100ms
@@ -60,6 +60,6 @@ See the [example](https://github.com/nearprotocol/nearcore/tree/master/tools/ind
 
 :::info NEAR Indexer Framework usage
 
-The most famous projet build on top of NEAR Indexer Framework is [NEAR Indexer for Explorer](./near-indexer-for-explorer)
+The most famous project build on top of NEAR Indexer Framework is [NEAR Indexer for Explorer](./near-indexer-for-explorer)
 
 :::
