@@ -14,7 +14,7 @@ const FeatureList = [
     description: (
       <>
         We have created the most lightweight and cost efficient library to build your own indexer.
-        Find out more about <Link to="/docs/projects/near-lake-framework">NEAR Lake Framework</Link>
+        Find out more about <Link to="https://docs.near.org/concepts/advanced/near-lake-framework">NEAR Lake Framework</Link>
       </>
     ),
   },
@@ -24,7 +24,7 @@ const FeatureList = [
     description: (
       <>
         A lot of things happen in NEAR Protocol under the hood. In order to build your indexer you need to
-        understand how data flows and what rules it follows. Start from <Link to="/docs/data-flow-and-structures/flow/near-data-flow">NEAR Data Flow</Link> article
+        understand how data flows and what rules it follows. Start from <Link to="https://docs.near.org/concepts/data-flow/near-data-flow">NEAR Data Flow</Link> article
       </>
     ),
   },
@@ -33,7 +33,7 @@ const FeatureList = [
     img: TutorialsImg,
     description: (
       <>
-        We believe in the power of examples and tutorials. That's why we are constantly working on creating new tutorials about indexers. Check out the <Link to="/tutorials/lake/near-lake-state-changes-indexer">Getting started with NEAR Lake Framework tutorial</Link>
+        We believe in the power of examples and tutorials. That's why we are constantly working on creating new tutorials about indexers. Check out the <Link to="https://docs.near.org/tutorials/indexer/near-lake-state-changes-indexer">Getting started with NEAR Lake Framework tutorial</Link>
       </>
     ),
   },
