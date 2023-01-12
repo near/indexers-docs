@@ -42,7 +42,7 @@ Say, we have a smart contract that sells e-books. Once a user buys a book we wan
 
 The dApp has a helper deployed somewhere off-chain, and this helper has code that can send an email with a copy of an e-book. But how would we trigger the helper?
 
-### Getting the data from a blockchain from the external world
+### Getting the data from a blockchain to the external world
 
 NEAR blockchain implements a [JSON-RPC endpoint](https://docs.near.org/api/rpc/introduction) for everyone to interact with the blockchain. Through the JSON-RPC API users can call smart contracts triggering them to be executed with given parameters. Also, users can view the data from the blockchain.
 
